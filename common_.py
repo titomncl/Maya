@@ -4,14 +4,14 @@ from qtpy.QtWidgets import QMainWindow
 from maya import OpenMayaUI as omui
 from shiboken2 import wrapInstance
 
-import os
-import re
+# import os
+# import re
 
-from pattern import Type, PROJECT_PATTERN, SIDE_PATTERN, OBJECT_NAME_PATTERN
-from pattern import PROJECT_GRP, MAIN_GRP, OBJECT_PATTERN
+# from pattern import Type, PROJECT_PATTERN, SIDE_PATTERN, OBJECT_NAME_PATTERN
+# from pattern import PROJECT_GRP, MAIN_GRP, OBJECT_PATTERN
 
-from Maya.pattern import Type
-from CommonTools.concat import concat
+# from Maya.pattern import Type
+# from CommonTools.concat import concat
 
 
 def test():

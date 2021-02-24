@@ -25,9 +25,9 @@ def get_main_window():
 
     return maya_main_window_instance
 
-def get_project():
+# def get_project():
 
-    print(Type.pattern(Type.get(Type.GRP)))
+    # print(Type.pattern(Type.get(Type.GRP)))
 
     # group_re = re.compile(PROJECT_GRP)
     #

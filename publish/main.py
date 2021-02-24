@@ -1,15 +1,10 @@
-import sys
+from Maya import common
 
-from qtpy import QtWidgets
+reload(common)
 
-from Maya.publish.source.ui import UI
-from Maya.publish.source.controller import Controller
+filepath = common.get_filepath()
 
-from Maya.common_ import get_main_window
-
-if __name__ == '__main__':
-    app = QtWidgets.QApplication(sys.argv)
-
-    UI_INSTANCE = Controller(UI, get_main_window())
-    UI_INSTANCE.show()
-    sys.exit(app.exec_())
+if filepath is None:
+    raise RuntimeError("Save your file before publishing")
+else:
+    print(filepath)

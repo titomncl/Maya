@@ -11,7 +11,7 @@ from shiboken2 import wrapInstance
 # from pattern import PROJECT_GRP, MAIN_GRP, OBJECT_PATTERN
 
 # from Maya.pattern import Type
-# from CommonTools.concat import concat
+from CommonTools.concat import concat
 
 
 def test():
@@ -24,6 +24,32 @@ def get_main_window():
     maya_main_window_instance = wrapInstance(int(maya_main_window), QMainWindow)
 
     return maya_main_window_instance
+
+
+def get_filepath():
+    """
+    Query the filepath of the scene
+
+    Returns:
+        str: filepath
+
+    """
+    filepath = mc.file(q=True, sn=True)
+
+    if filepath:
+        return filepath
+    else:
+        raise RuntimeError("File not saved.")
+
+
+def save_as(filepath):
+    """
+    Args:
+        filepath (str): path/filename.ma
+
+    """
+    mc.file(rename=filepath)
+    mc.file(save=True, type="mayaAscii")
 
 # def get_project():
 

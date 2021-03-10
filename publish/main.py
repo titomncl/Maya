@@ -1,10 +1,12 @@
-from Maya import common
+from Maya.publish.source.ui import UI
+from Maya.publish.source.controller import Controller
 
-reload(common)
 
-filepath = common.get_filepath()
+def main():
 
-if filepath is None:
-    raise RuntimeError("Save your file before publishing")
-else:
-    print(filepath)
+    UI_INSTANCE = Controller(UI)
+    # UI_INSTANCE.show()
+
+
+if __name__ == '__main__':
+    main()

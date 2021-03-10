@@ -1,12 +1,12 @@
 from qtpy.QtWidgets import QWidget as Qw
 
-from Maya.publish.source.core import filepath
+from Maya.publish.source import core
 
 class Controller(object):
 
     def __init__(self, ui, parent=None):
 
-        self.filepath = filepath()
+        self.filepath = core.filepath()
 
         self.ui = ui(self, parent)
 

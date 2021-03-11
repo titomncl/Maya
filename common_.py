@@ -1,10 +1,20 @@
 import maya.cmds as mc
 
+import os
+import sys
+
+import subprocess
+
 from qtpy.QtWidgets import QMainWindow
 from maya import OpenMayaUI as omui
 from shiboken2 import wrapInstance
 
-# import os
+from shutil import copyfile
+
+from Maya.globals import USER_PATH, PFE_PATH
+
+from Maya import init_env
+
 # import re
 
 # from pattern import Type, PROJECT_PATTERN, SIDE_PATTERN, OBJECT_NAME_PATTERN
@@ -16,6 +26,33 @@ from CommonTools.concat import concat
 
 def test():
     print("Hello World!")
+
+def update_user_setup():
+    source_file = os.path.join(os.path.dirname(init_env.__file__), "init_env.py").replace("\\", "/")
+
+    destination_file = concat(USER_PATH, "Documents/maya/2019/scripts/init_env.py", separator="/")
+
+    time_src = os.stat(source_file)
+    time_dst = os.stat(destination_file)
+
+    if time_src.st_mtime > time_dst.st_mtime:
+
+        copyfile(source_file, destination_file)
+
+        title = "Update"
+
+        msg = "An update has been made. Please, restart Maya to apply the modifications."
+
+        restart = "Restart"
+        cancel = "Later"
+
+        btn = [restart, cancel]
+
+        choice_ = mc.confirmDialog(t=title, m=msg, b=btn, db=restart, cb=cancel, ds=cancel)
+
+        if choice_ == restart:
+            subprocess.Popen('"C:\\Program Files\\Autodesk\\Maya2019\\bin\\maya.exe"', shell=True)
+            mc.quit(force=True)
 
 
 def get_main_window():

@@ -55,47 +55,23 @@ def ipm_package():
     sys.path.append(USER_PATH + "/ISART_PROJECT_MANAGER/")
     sys.path.append(USER_PATH + '/ISART_PROJECT_MANAGER/PY/')
 
-    ### ISART PROJECT MANAGER PACKAGE ###
-    try:
-        import ipm
-        import Vinci
-
-        from globals import ROOT_PATH
-
-    except ImportError:
-        add_ipm()
-
-        sys.path.append(USER_PATH + "/ISART_PROJECT_MANAGER/")
-        sys.path.append(USER_PATH + '/ISART_PROJECT_MANAGER/PY/')
-
-    else:
-
-        ### VARIABLES GENERALES ###
-        project_name = ipm.ctFindProject()
-
-        if project_name:
-            print('NOM_PROJET : %s' % project_name)
-            props = ipm.ctFindAsset(project_name, 'CHARA\\*')
-            print('LISTE_PERSOS : %s' % ' '.join(props))
-            modules = ipm.ctFindAsset(project_name, 'SET\\*\\MODULES\\*')
-            print('LISTE_MODULES : %s' % ' '.join(modules))
-
-            ### MENU ISART ###
-            import maya.cmds as cmds
-            import maya.mel as mel
-            cmds.evalDeferred(ipm.ctIsartMenu_UI)
-
-        return project_name
+    import ipm
+    import Vinci
 
 
-def add_ipm():
-    import os
+    ### VARIABLES GENERALES ###
+    project_name = ipm.ctFindProject()
 
-    from distutils.dir_util import copy_tree
+    if project_name:
+        print('NOM_PROJET : %s' % project_name)
+        props = ipm.ctFindAsset(project_name, 'CHARA\\*')
+        print('LISTE_PERSOS : %s' % ' '.join(props))
+        modules = ipm.ctFindAsset(project_name, 'SET\\*\\MODULES\\*')
+        print('LISTE_MODULES : %s' % ' '.join(modules))
 
-    ipm = "ISART_PROJECT_MANAGER"
+        ### MENU ISART ###
+        import maya.cmds as cmds
+        import maya.mel as mel
+        cmds.evalDeferred(ipm.ctIsartMenu_UI)
 
-    src = "G:/.shortcut-targets-by-id/1LKqbnGUt5-Lrfl9lElekEI0vY2DOIoog/VSPA/DEV/main/" + ipm
-    dst = os.environ['USERPROFILE'].replace('\\', '/')
-
-    copy_tree(src, dst)
+    return project_name

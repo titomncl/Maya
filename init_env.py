@@ -16,7 +16,7 @@ def main():
     import sys
 
     PFE_ENV = ROOT_PATH + "/" + project_name
-    print(PFE_ENV)
+
     DEV_ENV = "E:/DEV"
 
     if os.path.isdir(DEV_ENV):
@@ -58,7 +58,6 @@ def ipm_package():
     import ipm
     import Vinci
 
-
     ### VARIABLES GENERALES ###
     project_name = ipm.ctFindProject()
 
@@ -72,6 +71,7 @@ def ipm_package():
         ### MENU ISART ###
         import maya.cmds as cmds
         import maya.mel as mel
+
         cmds.evalDeferred(ipm.ctIsartMenu_UI)
 
     return project_name

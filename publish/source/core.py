@@ -4,9 +4,8 @@ from shutil import copyfile
 
 from CommonTools.concat import concat
 
-from Maya.publish.source.config import PFE_PATH
+from Maya.globals import PFE_PATH
 from Maya.common_ import get_filepath, save_as
-from Maya.publish.source.config import PROJECT
 
 def filepath():
     try:

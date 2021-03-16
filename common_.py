@@ -11,16 +11,10 @@ from shiboken2 import wrapInstance
 
 from shutil import copyfile
 
-from Maya.globals import USER_PATH, PFE_PATH
+from Maya.globals import USER_PATH
 
 from Maya import init_env
 
-# import re
-
-# from pattern import Type, PROJECT_PATTERN, SIDE_PATTERN, OBJECT_NAME_PATTERN
-# from pattern import PROJECT_GRP, MAIN_GRP, OBJECT_PATTERN
-
-# from Maya.pattern import Type
 from CommonTools.concat import concat
 
 
@@ -32,27 +26,46 @@ def update_user_setup():
 
     destination_file = concat(USER_PATH, "Documents/maya/2019/scripts/init_env.py", separator="/")
 
-    time_src = os.stat(source_file)
-    time_dst = os.stat(destination_file)
+    updated = False
 
-    if time_src.st_mtime > time_dst.st_mtime:
-
+    if not os.path.isfile(destination_file):
         copyfile(source_file, destination_file)
+        updated = True
+    else:
+        time_src = os.stat(source_file)
+        time_dst = os.stat(destination_file)
 
-        title = "Update"
+        if time_src.st_mtime > time_dst.st_mtime:
 
-        msg = "An update has been made. Please, restart Maya to apply the modifications."
+            copyfile(source_file, destination_file)
+            updated = True
 
-        restart = "Restart"
-        cancel = "Later"
+    if updated:
+        update_popup()
 
-        btn = [restart, cancel]
+def update_shelf():
+    source_file = os.path.join(os.path.dirname(init_env.__file__), "shelves/shelf_VSPA_TOOLS.mel").replace("\\", "/")
+    destination_file = concat(USER_PATH, "/Documents/maya/2019/prefs/shelves/shelf_VSPA_TOOLS.mel")
 
-        choice_ = mc.confirmDialog(t=title, m=msg, b=btn, db=restart, cb=cancel, ds=cancel)
+    copyfile(source_file, destination_file)
 
-        if choice_ == restart:
-            subprocess.Popen('"C:\\Program Files\\Autodesk\\Maya2019\\bin\\maya.exe"', shell=True)
-            mc.quit(force=True)
+
+def update_popup():
+
+    title = "Update"
+
+    msg = "An update has been made. Please, restart Maya to apply the modifications."
+
+    restart = "Restart"
+    cancel = "Later"
+
+    btn = [restart, cancel]
+
+    choice_ = mc.confirmDialog(t=title, m=msg, b=btn, db=restart, cb=cancel, ds=cancel)
+
+    if choice_ == restart:
+        subprocess.Popen('"C:\\Program Files\\Autodesk\\Maya2019\\bin\\maya.exe"', shell=True)
+        mc.quit(force=True)
 
 
 def get_main_window():

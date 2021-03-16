@@ -1,4 +1,6 @@
 def main():
+    update_ipm()
+
     import os
     import sys
     import maya.cmds as cmds
@@ -36,7 +38,7 @@ def main():
     os.environ["PFE_PROJET"] = PFE_ENV
 
     ########### PFE ENV END ###########
-
+    print("DONE")
     ########## AUTO UDPATE ##########
     from Maya import common_
 
@@ -50,7 +52,6 @@ def ipm_package():
 
     ############ USER PROFILE ############
     USER_PATH = os.environ['USERPROFILE'].replace('\\', '/')
-    print(USER_PATH.upper())
 
     ############ ADD IPM IN PYTHONPATH ############
     sys.path.append(USER_PATH + "/ISART_PROJECT_MANAGER/")
@@ -71,8 +72,14 @@ def ipm_package():
 
         ### MENU ISART ###
         import maya.cmds as cmds
-        import maya.mel as mel
 
         cmds.evalDeferred(ipm.ctIsartMenu_UI)
 
     return project_name
+
+def update_ipm():
+    import subprocess
+
+    subprocess.Popen(
+        '"G:\\.shortcut-targets-by-id\\1LKqbnGUt5-Lrfl9lElekEI0vY2DOIoog\\VSPA\\DEV\\main\\update_ipm.bat"',
+        shell=True)

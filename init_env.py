@@ -1,6 +1,4 @@
 def main():
-    update_ipm()
-
     import os
     import sys
     import maya.cmds as cmds

@@ -41,6 +41,7 @@ def main():
     from Maya import common_
 
     cmds.evalDeferred(common_.update_user_setup)
+    cmds.evalDeferred(common_.update_shelf)
 
 
 def ipm_package():

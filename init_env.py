@@ -40,8 +40,8 @@ def main():
     ########## AUTO UDPATE ##########
     from Maya import common_
 
+    common_.update_shelf()
     cmds.evalDeferred(common_.update_user_setup)
-    cmds.evalDeferred(common_.update_shelf)
 
 
 def ipm_package():

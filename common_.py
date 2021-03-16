@@ -45,25 +45,9 @@ def update_user_setup():
 
 def update_shelf():
     source_file = os.path.join(os.path.dirname(init_env.__file__), "shelves/shelf_VSPA_TOOLS.mel").replace("\\", "/")
+    destination_file = concat(USER_PATH, "/Documents/maya/2019/prefs/shelves/shelf_VSPA_TOOLS.mel")
 
-    destination_file = concat(USER_PATH, "Documents/maya/2019/prefs/shelves/shelf_VSPA_TOOLS.mel", separator="/")
-
-    updated = False
-
-    if not os.path.isfile(destination_file):
-        copyfile(source_file, destination_file)
-        updated = True
-    else:
-        time_src = os.stat(source_file)
-        time_dst = os.stat(destination_file)
-
-        if time_src.st_mtime > time_dst.st_mtime:
-
-            copyfile(source_file, destination_file)
-            updated = True
-
-    if updated:
-        update_popup()
+    copyfile(source_file, destination_file)
 
 
 def update_popup():

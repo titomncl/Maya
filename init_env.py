@@ -1,6 +1,13 @@
 def main():
+    update_ipm()
+    import time
+    time.sleep(2)
+
+    print("IPM UPDATED")
+
     import os
     import sys
+
     import maya.cmds as cmds
 
     print("INIT_ENV")
@@ -77,6 +84,8 @@ def ipm_package():
 
 def update_ipm():
     import subprocess
+
+    print("UPDATE IPM")
 
     subprocess.Popen(
         '"G:\\.shortcut-targets-by-id\\1LKqbnGUt5-Lrfl9lElekEI0vY2DOIoog\\VSPA\\DEV\\main\\update_ipm.bat"',

@@ -1,5 +1,3 @@
-from qtpy.QtWidgets import QWidget as Qw
-
 from Maya.publish.source import core
 from Maya.globals import PROJECT
 
@@ -28,7 +26,7 @@ class Controller(object):
         self.close_btn = self.ui.close_btn
 
         self.library_box = self.ui.library_combobox
-        self.get_chara()
+        self.get_asset(self.asset_type)
         self.update_asset_name()
 
         self.chara_btn.setChecked(True)
@@ -71,31 +69,22 @@ class Controller(object):
         self.save_btn.clicked.connect(self.save_and_publish)
         self.close_btn.clicked.connect(self.close_action)
 
-    def get_chara(self):
-        characters = ipm_v2.ct_find_assets(PROJECT, 'CHARA\\*')
-
-        characters.sort()
-
-        self.library_box.clear()
-        self.library_box.addItems(characters)
-
     def chara_action(self):
         self.props_btn.setChecked(False)
         self.asset_type = "CHARA"
-        self.get_chara()
-
-    def get_props(self):
-        props = ipm_v2.ct_find_assets(PROJECT, 'PROPS\\*')
-
-        props.sort()
-
-        self.library_box.clear()
-        self.library_box.addItems(props)
+        self.get_asset(self.asset_type)
 
     def props_action(self):
         self.chara_btn.setChecked(False)
         self.asset_type = "PROPS"
-        self.get_props()
+        self.get_asset(self.asset_type)
+
+    def get_asset(self, asset):
+        assets = ipm_v2.ct_find_assets(PROJECT, asset)
+        assets.sort()
+
+        self.library_box.clear()
+        self.library_box.addItems(assets)
 
     def mod_action(self):
         self.shd_btn.setChecked(False)

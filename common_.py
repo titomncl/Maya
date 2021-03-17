@@ -101,22 +101,6 @@ def save_as(filepath):
     mc.file(rename=filepath)
     mc.file(save=True, type="mayaAscii")
 
-# def get_project():
+def open_file(filepath):
 
-    # print(Type.pattern(Type.get(Type.GRP)))
-
-    # group_re = re.compile(PROJECT_GRP)
-    #
-    # groups = mc.ls("*_grp")
-    #
-    # if len(groups) > 0:
-    #     for group in groups:
-    #         is_asset = group_re.match(group)
-    #
-    #         print(PROJECT_GRP)
-    #
-    #         if is_asset:
-    #             print(group)
-    #             break
-    # else:
-    #     raise RuntimeWarning("No project found")
+    mc.file(filepath, open=True, lrd="all", f=True)

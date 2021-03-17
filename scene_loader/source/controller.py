@@ -1,5 +1,9 @@
-from Maya.publish.source import core
+
+from CommonTools.concat import concat
+
+from Maya.scene_loader.source import core
 from Maya.globals import PROJECT
+from Maya.common_ import open_file
 
 import ipm_v2
 
@@ -7,11 +11,7 @@ class Controller(object):
 
     def __init__(self, ui, parent=None):
 
-        self.filepath = core.filepath()
-
         self.ui = ui(self, parent)
-
-        self.first_save_or_not()
 
         self.asset_type = "CHARA"
         self.asset_name = ""
@@ -22,10 +22,11 @@ class Controller(object):
         self.mod_btn = self.ui.mod_btn
         self.shd_btn = self.ui.shd_btn
         self.rig_btn = self.ui.rig_btn
-        self.save_btn = self.ui.save_btn
+        self.load_btn = self.ui.load_btn
         self.close_btn = self.ui.close_btn
 
         self.library_box = self.ui.library_combobox
+
         self.get_asset(self.asset_type)
         self.update_asset_name()
 
@@ -37,25 +38,10 @@ class Controller(object):
 
         self.init_btn_connections()
 
-    def first_save_or_not(self):
-        if not self.filepath:
-            self.show()
-        else:
-            choice, save_choice = self.ui.message_box()
-
-            if choice == save_choice:
-                self.save_and_publish(first_save=False)
+        self.show()
 
     def show(self):
         self.ui.show()
-
-    def save_and_publish(self, first_save=True):
-        if first_save:
-            self.filepath = core.first_save(self.asset_type, self.asset_name, self.dpt)
-        else:
-            self.filepath = core.save(self.filepath)
-
-        core.publish(self.filepath)
 
     def init_btn_connections(self):
         self.chara_btn.clicked.connect(self.chara_action)
@@ -66,7 +52,7 @@ class Controller(object):
 
         self.library_box.currentTextChanged.connect(self.update_asset_name)
 
-        self.save_btn.clicked.connect(self.save_and_publish)
+        self.load_btn.clicked.connect(self.load_action)
         self.close_btn.clicked.connect(self.close_action)
 
     def chara_action(self):
@@ -106,6 +92,16 @@ class Controller(object):
 
     def update_asset_name(self):
         self.asset_name = self.library_box.currentText()
+
+    def load_action(self):
+        path = core.get_filepath(self.asset_type, self.asset_name, self.dpt)
+        last_file = core.get_last_file(path)
+
+        filepath = concat(path, last_file, separator="/")
+
+        open_file(filepath)
+
+        self.close_action()
 
     def close_action(self):
         self.ui.close()

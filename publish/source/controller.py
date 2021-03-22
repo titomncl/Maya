@@ -70,11 +70,13 @@ class Controller(object):
         self.close_btn.clicked.connect(self.close_action)
 
     def chara_action(self):
+        self.chara_btn.setChecked(True)
         self.props_btn.setChecked(False)
         self.asset_type = "CHARA"
         self.get_asset(self.asset_type)
 
     def props_action(self):
+        self.props_btn.setChecked(True)
         self.chara_btn.setChecked(False)
         self.asset_type = "PROPS"
         self.get_asset(self.asset_type)
@@ -87,18 +89,21 @@ class Controller(object):
         self.library_box.addItems(assets)
 
     def mod_action(self):
+        self.mod_btn.setChecked(True)
         self.shd_btn.setChecked(False)
         self.rig_btn.setChecked(False)
 
         self.dpt = "MOD"
 
     def shd_action(self):
+        self.shd_btn.setChecked(True)
         self.mod_btn.setChecked(False)
         self.rig_btn.setChecked(False)
 
         self.dpt = "SHD"
 
     def rig_action(self):
+        self.rig_btn.setChecked(True)
         self.shd_btn.setChecked(False)
         self.mod_btn.setChecked(False)
 

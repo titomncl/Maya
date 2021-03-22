@@ -16,11 +16,15 @@ def get_last_file(path):
 
     files = os.listdir(path)
 
-    if "desktop.ini" in files:
-        files.remove("desktop.ini")
+    if files:
 
-    files.sort()
+        if "desktop.ini" in files:
+            files.remove("desktop.ini")
 
-    last_file = files[-1]
+        files.sort()
 
-    return last_file
+        last_file = files[-1]
+
+        return last_file
+    else:
+        raise RuntimeError("No files found.")

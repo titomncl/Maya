@@ -55,7 +55,9 @@ class Controller(object):
         else:
             self.filepath = core.save(self.filepath)
 
-        core.publish(self.filepath)
+        choice, save_choice = self.ui.message_box()
+        if choice == save_choice:
+            core.publish(self.filepath)
 
     def init_btn_connections(self):
         self.chara_btn.clicked.connect(self.chara_action)

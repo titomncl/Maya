@@ -22,7 +22,7 @@ def test():
     print("Hello World!")
 
 def update_user_setup():
-    source_file = os.path.join(os.path.dirname(init_env.__file__), "init_env.py").replace("\\", "/")
+    source_file = os.path.join(DEV_PATH, "Maya/init_env.py").replace("\\", "/")
 
     destination_file = concat(USER_PATH, "Documents/maya/2019/scripts/init_env.py", separator="/")
 
@@ -44,7 +44,7 @@ def update_user_setup():
         update_popup()
 
 def update_shelf():
-    source_file = os.path.join(os.path.dirname(init_env.__file__), "shelves/shelf_VSPA_TOOLS.mel").replace("\\", "/")
+    source_file = os.path.join(DEV_PATH, "Maya/shelves/shelf_VSPA_TOOLS.mel").replace("\\", "/")
     destination_file = concat(USER_PATH, "/Documents/maya/2019/prefs/shelves/shelf_VSPA_TOOLS.mel")
 
     copyfile(source_file, destination_file)

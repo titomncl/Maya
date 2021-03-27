@@ -3,7 +3,7 @@
 def main():
     update_ipm()
     import time
-    time.sleep(2)
+    time.sleep(3)
 
     print("IPM UPDATED")
 

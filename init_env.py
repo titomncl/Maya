@@ -1,4 +1,4 @@
-# version: 1.0.2
+# version: 1.0.3
 
 def main():
     update_ipm()
@@ -65,7 +65,7 @@ def ipm_package(dev=False):
     sys.path.append(USER_PATH + "/ISART_PROJECT_MANAGER/")
     sys.path.append(USER_PATH + '/ISART_PROJECT_MANAGER/PY/')
 
-    import Vinci
+    # import Vinci
 
     if dev:
         import ipm_v2 as ipm

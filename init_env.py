@@ -1,73 +1,86 @@
-# version: 1.0.3
+# version: 1.1.0
 
 def main():
-    update_ipm()
-    import time
-    time.sleep(3)
-
-    print("IPM UPDATED")
 
     import os
+    import sys
 
     import maya.cmds as cmds
 
     print("INIT_ENV")
 
-    ############ HOT-FIX ############
-    os.environ["PFE_PROJET"] = "G:/.shortcut-targets-by-id/1LKqbnGUt5-Lrfl9lElekEI0vY2DOIoog/VSPA"
-    ROOT_PATH = "G:/.shortcut-targets-by-id/1LKqbnGUt5-Lrfl9lElekEI0vY2DOIoog"
-
-    DEV_ENV = "E:/DEV"
-
-    project_name = ipm_package(os.path.isdir(DEV_ENV))
-
-    ############# PFE ENV #############
-    import os
-    import sys
-
-    PFE_ENV = ROOT_PATH + "/" + project_name
-
-    DEV_ENV = "E:/DEV"
-
-    if os.path.isdir(DEV_ENV):
-        venv = DEV_ENV + "/venv/Lib/site-packages"
+    if os.path.isdir("E:/DEV"):
+        dev = True
     else:
-        DEV_ENV = PFE_ENV + "/DEV/main"
-        venv = DEV_ENV + "/venv/Lib/site-packages"
+        dev = False
 
-    sys.path.append(PFE_ENV)
-    sys.path.append(DEV_ENV)
-    sys.path.append(venv)
+    ROOT_PATH = pfe_root_path(dev)
 
-    os.environ["PFE_ENV"] = PFE_ENV
-    os.environ["DEV_ENV"] = DEV_ENV
+    if ROOT_PATH:
+        project_name = ipm_package(ROOT_PATH, dev)
 
-    ############ HOT-FIX ############
-    os.environ["PFE_PROJET"] = PFE_ENV
+        PFE_ENV = ROOT_PATH + "/" + project_name
 
-    ########### PFE ENV END ###########
-    print("DONE")
-    ########## AUTO UDPATE ##########
-    from Maya import common_
+        DEV_ENV = "E:/DEV"
 
-    common_.update_shelf()
-    cmds.evalDeferred(common_.update_user_setup)
+        if os.path.isdir(DEV_ENV):
+            PFE_ENV = "D:/"
+            venv = DEV_ENV + "/venv/Lib/site-packages"
+        else:
+            DEV_ENV = PFE_ENV + "/DEV/main"
+            venv = DEV_ENV + "/venv/Lib/site-packages"
+
+        sys.path.append(PFE_ENV)
+        sys.path.append(DEV_ENV)
+        sys.path.append(venv)
+
+        os.environ["PFE_ENV"] = PFE_ENV
+        os.environ["DEV_ENV"] = DEV_ENV
+
+        ############ HOT-FIX ############
+        os.environ["PFE_PROJET"] = PFE_ENV
+
+        ########### PFE ENV END ###########
+        print("DONE")
+        ########## AUTO UDPATE ##########
+        from Maya import common_
+
+        common_.update_shelf()
+        cmds.evalDeferred(common_.update_user_setup)
 
 
-def ipm_package(dev=False):
-    import sys
+def pfe_root_path(dev=False):
     import os
 
-    ############ USER PROFILE ############
-    USER_PATH = os.environ['USERPROFILE'].replace('\\', '/')
-
-    ############ ADD IPM IN PYTHONPATH ############
-    sys.path.append(USER_PATH + "/ISART_PROJECT_MANAGER/")
-    sys.path.append(USER_PATH + '/ISART_PROJECT_MANAGER/PY/')
-
-    # import Vinci
+    google_path = "G:/.shortcut-targets-by-id/1LKqbnGUt5-Lrfl9lElekEI0vY2DOIoog/"
+    school_path = "X:/INPUT/"
 
     if dev:
+        return "D:/"
+
+    if os.path.isdir(google_path + "VSPA/DATA/LIB/CHARA"):
+        return google_path
+    elif os.path.isdir(school_path + "VSPA/DATA/LIB/CHARA"):
+        return school_path
+    else:
+        print("No PFE path found.")
+        return None
+
+
+def ipm_package(path, dev=True):
+
+    import sys
+
+    print("IPM path is:", path)
+    print("Dev mode:", dev)
+
+    if dev:
+
+        ############ ADD IPM IN PYTHONPATH ############
+        ipm_path = "E:/DEV"
+        sys.path.append(ipm_path + "/ISART_PROJECT_MANAGER/")
+        sys.path.append(ipm_path + '/ISART_PROJECT_MANAGER/PY/')
+
         import ipm_v2 as ipm
 
         ### VARIABLES GENERALES ###
@@ -89,6 +102,12 @@ def ipm_package(dev=False):
 
         return project_name
     else:
+
+        ############ ADD IPM IN PYTHONPATH ############
+        ipm_path = path + "/VSPA/DEV/main"
+        sys.path.append(ipm_path + "/ISART_PROJECT_MANAGER/")
+        sys.path.append(ipm_path + '/ISART_PROJECT_MANAGER/PY/')
+
         import ipm
 
         ### VARIABLES GENERALES ###
@@ -107,24 +126,3 @@ def ipm_package(dev=False):
             cmds.evalDeferred(ipm.ctIsartMenu_UI)
 
         return project_name
-
-
-def update_ipm():
-    import subprocess
-    import os
-
-    print("UPDATE IPM")
-
-    DEV_ENV = "E:\\DEV"
-    PFE_ENV = "G:\\.shortcut-targets-by-id\\1LKqbnGUt5-Lrfl9lElekEI0vY2DOIoog"
-    not_shell = False
-
-    if not os.path.isdir(DEV_ENV):
-        DEV_ENV = PFE_ENV + "\\VSPA\\DEV\\main"
-        not_shell = True
-
-    updater_path = DEV_ENV + "\\update_ipm.bat"
-
-    subprocess.Popen(
-        '"' + updater_path + '"',
-        shell=not_shell)

@@ -2,10 +2,17 @@
 from CommonTools.concat import concat
 
 from Maya.scene_loader.source import core
-from Maya.globals import PROJECT
+from Maya.globals import PROJECT, USER_PATH
 from Maya.common_ import open_file
 
-import ipm_v2
+try:
+    import ipm_v2
+except ImportError:
+    import sys
+    sys.path.append(USER_PATH + '/ISART_PROJECT_MANAGER/PY/')
+
+    import ipm_v2
+
 
 class Controller(object):
 

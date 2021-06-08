@@ -1,7 +1,13 @@
 from Maya.publish.source import core
 from Maya.globals import PROJECT
 
-import ipm_v2
+try:
+    import ipm_v2
+except ImportError:
+    import sys
+    sys.path.append(USER_PATH + '/ISART_PROJECT_MANAGER/PY/')
+
+    import ipm_v2
 
 class Controller(object):
 

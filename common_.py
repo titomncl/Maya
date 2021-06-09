@@ -13,8 +13,6 @@ from shutil import copyfile
 
 from Maya.globals import USER_PATH, DEV_PATH
 
-from Maya import init_env
-
 from CommonTools.concat import concat
 
 
@@ -116,6 +114,41 @@ def save_as(filepath):
     mc.file(rename=filepath)
     mc.file(save=True, type="mayaAscii")
 
+
 def open_file(filepath):
 
     mc.file(filepath, open=True, lrd="all", f=True)
+
+
+def get_dag_objects(all=True):
+    """
+    Get a list of object
+    Args:
+        all (bool): If true, get the visible dag objects. If false, get the current selection
+
+    Returns:
+        list(str):
+
+    """
+    if all:
+        return mc.ls(v=True)
+    else:
+        return mc.ls(sl=True)
+
+
+def clean_mode():
+    select_list_object()
+    freeze_transforms()
+    delete_history()
+
+
+def select_list_object():
+    mc.select(get_dag_objects())
+
+
+def delete_history():
+    mc.delete(ch=True)
+
+
+def freeze_transforms():
+    mc.makeIdentity(apply=True, t=True, r=True, s=True, n=False, pn=True)

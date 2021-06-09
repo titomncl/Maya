@@ -1,12 +1,9 @@
-from Maya.publish.source.ui import UI
 from Maya.publish.source.controller import Controller
 
 
 def main():
 
-    UI_INSTANCE = Controller(UI)
-    # UI_INSTANCE.show()
-
+    Controller()
 
 if __name__ == '__main__':
     main()

@@ -18,7 +18,7 @@ class UI(Qw.QWidget):
         self.setParent(get_main_window())
         self.setWindowFlags(Qc.Qt.Tool)
 
-        self.setWindowTitle("Publisher")
+        self.setWindowTitle("Save File")
 
         self.controller = controller
 
@@ -131,7 +131,7 @@ class UI(Qw.QWidget):
 
         msg_box = Qw.QMessageBox(self)
         msg_box.setWindowTitle("Save")
-        msg_box.setText("The file will be saved and published.")
+        msg_box.setText("The file will be saved.")
         msg_box.setInformativeText("Do you want to continue?")
         msg_box.setStandardButtons(Qw.QMessageBox.Save | Qw.QMessageBox.Cancel)
         msg_box.setDefaultButton(Qw.QMessageBox.Save)

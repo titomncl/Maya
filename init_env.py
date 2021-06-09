@@ -1,4 +1,4 @@
-# version: 1.1.0
+# version: 1.1.1
 
 def main():
 
@@ -16,6 +16,8 @@ def main():
 
     ROOT_PATH = pfe_root_path(dev)
 
+    os.environ["ROOT_PATH"] = ROOT_PATH
+
     if ROOT_PATH:
         project_name = ipm_package(ROOT_PATH, dev)
 
@@ -24,7 +26,6 @@ def main():
         DEV_ENV = "E:/DEV"
 
         if os.path.isdir(DEV_ENV):
-            PFE_ENV = "D:/"
             venv = DEV_ENV + "/venv/Lib/site-packages"
         else:
             DEV_ENV = PFE_ENV + "/DEV/main"

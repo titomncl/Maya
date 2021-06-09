@@ -4,7 +4,7 @@ global proc shelf_VSPA_TOOLS () {
     global string $gBuffStr1;
 
 
-        shelfButton
+    shelfButton
         -enableCommandRepeat 1
         -flexibleWidthType 3
         -flexibleWidthValue 32
@@ -49,28 +49,28 @@ global proc shelf_VSPA_TOOLS () {
         -manage 1
         -visible 1
         -preventOverride 0
-        -annotation "Load or automatically load plug-ins" 
+        -annotation "Load or automatically load plug-ins"
         -enableBackground 0
-        -backgroundColor 0 0 0 
-        -highlightColor 0.321569 0.521569 0.65098 
-        -align "center" 
-        -label "Plug-in Manager" 
+        -backgroundColor 0 0 0
+        -highlightColor 0.321569 0.521569 0.65098
+        -align "center"
+        -label "Plug-in Manager"
         -labelOffset 0
         -rotation 0
         -flipX 0
         -flipY 0
         -useAlpha 1
-        -font "plainLabelFont" 
-        -imageOverlayLabel "PM" 
-        -overlayLabelColor 0.8 0.8 0.8 
-        -overlayLabelBackColor 0 0 0 0.5 
-        -image "menuIconWindow.png" 
-        -image1 "menuIconWindow.png" 
-        -style "iconOnly" 
+        -font "plainLabelFont"
+        -imageOverlayLabel "PM"
+        -overlayLabelColor 0.8 0.8 0.8
+        -overlayLabelBackColor 0 0 0 0.5
+        -image "menuIconWindow.png"
+        -image1 "menuIconWindow.png"
+        -style "iconOnly"
         -marginWidth 1
         -marginHeight 1
-        -command "PluginManager" 
-        -sourceType "mel" 
+        -command "PluginManager"
+        -sourceType "mel"
         -commandRepeatable 1
         -flat 1
     ;
@@ -84,28 +84,28 @@ global proc shelf_VSPA_TOOLS () {
         -manage 1
         -visible 1
         -preventOverride 0
-        -annotation "Display and edit relationships among nodes of the scene" 
+        -annotation "Display and edit relationships among nodes of the scene"
         -enableBackground 0
-        -backgroundColor 0 0 0 
-        -highlightColor 0.321569 0.521569 0.65098 
-        -align "center" 
-        -label "Node Editor" 
+        -backgroundColor 0 0 0
+        -highlightColor 0.321569 0.521569 0.65098
+        -align "center"
+        -label "Node Editor"
         -labelOffset 0
         -rotation 0
         -flipX 0
         -flipY 0
         -useAlpha 1
-        -font "plainLabelFont" 
-        -imageOverlayLabel "NE" 
-        -overlayLabelColor 0.8 0.8 0.8 
-        -overlayLabelBackColor 0 0 0 0.5 
-        -image "menuIconWindow.png" 
-        -image1 "menuIconWindow.png" 
-        -style "iconOnly" 
+        -font "plainLabelFont"
+        -imageOverlayLabel "NE"
+        -overlayLabelColor 0.8 0.8 0.8
+        -overlayLabelBackColor 0 0 0 0.5
+        -image "menuIconWindow.png"
+        -image1 "menuIconWindow.png"
+        -style "iconOnly"
         -marginWidth 1
         -marginHeight 1
-        -command "NodeEditorWindow" 
-        -sourceType "mel" 
+        -command "NodeEditorWindow"
+        -sourceType "mel"
         -commandRepeatable 1
         -flat 1
     ;
@@ -119,28 +119,28 @@ global proc shelf_VSPA_TOOLS () {
         -manage 1
         -visible 1
         -preventOverride 0
-        -annotation "LRA" 
+        -annotation "LRA"
         -enableBackground 0
-        -backgroundColor 0 0 0 
-        -highlightColor 0.321569 0.521569 0.65098 
-        -align "center" 
-        -label "LRA" 
+        -backgroundColor 0 0 0
+        -highlightColor 0.321569 0.521569 0.65098
+        -align "center"
+        -label "LRA"
         -labelOffset 0
         -rotation 0
         -flipX 0
         -flipY 0
         -useAlpha 1
-        -font "plainLabelFont" 
-        -imageOverlayLabel "LRA" 
-        -overlayLabelColor 0.8 0.8 0.8 
-        -overlayLabelBackColor 0 0 0 0.5 
-        -image "buttonManip.svg" 
-        -image1 "buttonManip.svg" 
-        -style "iconOnly" 
+        -font "plainLabelFont"
+        -imageOverlayLabel "LRA"
+        -overlayLabelColor 0.8 0.8 0.8
+        -overlayLabelBackColor 0 0 0 0.5
+        -image "buttonManip.svg"
+        -image1 "buttonManip.svg"
+        -style "iconOnly"
         -marginWidth 1
         -marginHeight 1
-        -command "import maya.cmds as cmds\n\njointsSelected = cmds.ls(type = \"joint\", selection = 1)\n\nif len(jointsSelected) == 0:\n    jointsList = cmds.ls(type = \"joint\")\nelse: \n    jointsList = cmds.ls ( dag = 1, allPaths = 1, selection = 1)\n\n\ndisplay = 1 - cmds.getAttr(jointsList[0] + \".displayLocalAxis\")\n\nfor jnt in jointsList:\n    cmds.setAttr(jnt + \".displayLocalAxis\", display)" 
-        -sourceType "python" 
+        -command "import maya.cmds as cmds\n\njointsSelected = cmds.ls(type = \"joint\", selection = 1)\n\nif len(jointsSelected) == 0:\n    jointsList = cmds.ls(type = \"joint\")\nelse: \n    jointsList = cmds.ls ( dag = 1, allPaths = 1, selection = 1)\n\n\ndisplay = 1 - cmds.getAttr(jointsList[0] + \".displayLocalAxis\")\n\nfor jnt in jointsList:\n    cmds.setAttr(jnt + \".displayLocalAxis\", display)"
+        -sourceType "python"
         -commandRepeatable 1
         -flat 1
     ;
@@ -244,9 +244,10 @@ global proc shelf_VSPA_TOOLS () {
         -style "iconOnly"
         -marginWidth 1
         -marginHeight 1
-        -command ""
+        -command "import os\nimport sys\npath = \"G:/.shortcut-targets-by-id/1LKqbnGUt5-Lrfl9lElekEI0vY2DOIoog/VSPA/DEV/main\"\nvenv = path + \"/venv/Lib/site-packages\"\nos.environ[\"PFE_ENV\"] = \"G:/.shortcut-targets-by-id/1LKqbnGUt5-Lrfl9lElekEI0vY2DOIoog/VSPA\"\nos.environ[\"DEV_ENV\"] = \"G:/.shortcut-targets-by-id/1LKqbnGUt5-Lrfl9lElekEI0vY2DOIoog/VSPA/DEV/main\"\nos.environ[\"PFE_PROJET\"] = \"G:/.shortcut-targets-by-id/1LKqbnGUt5-Lrfl9lElekEI0vY2DOIoog/VSPA\"\nsys.path.append(path)\nsys.path.append(venv)\nfrom Maya.common_ import update_user_setup\nupdate_user_setup()"
         -sourceType "python"
         -commandRepeatable 1
         -flat 1
     ;
+
 }

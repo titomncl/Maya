@@ -1,4 +1,4 @@
-# version: 1.1.1
+# version: 1.1.2
 
 def main():
 
@@ -116,10 +116,10 @@ def ipm_package(path, dev=True):
 
         if project_name:
             print('NOM_PROJET : %s' % project_name)
-            props = ipm.ctFindAsset(project_name, 'CHARA\\*')
-            print('LISTE_PERSOS : %s' % ' '.join(props))
-            modules = ipm.ctFindAsset(project_name, 'SET\\*\\MODULES\\*')
-            print('LISTE_MODULES : %s' % ' '.join(modules))
+            chara = ipm.ctFindAsset(project_name, 'CHARA')
+            print('LISTE_PERSOS : %s' % ' '.join(chara))
+            props = ipm.ctFindAsset(project_name, 'PROPS')
+            print('LISTE_PROPS : %s' % ' '.join(props))
 
             ### MENU ISART ###
             import maya.cmds as cmds

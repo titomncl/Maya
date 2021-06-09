@@ -214,4 +214,39 @@ global proc shelf_VSPA_TOOLS () {
         -commandRepeatable 1
         -flat 1
     ;
-} 
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "UPDATE"
+        -enableBackground 0
+        -backgroundColor 0 0 0
+        -highlightColor 0.321569 0.521569 0.65098
+        -align "center"
+        -label "UPDATE"
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont"
+        -imageOverlayLabel "UPDATE"
+        -overlayLabelColor 0.8 0.8 0.8
+        -overlayLabelBackColor 0 0 0 0.5
+        -image "refresh.png"
+        -image1 "refresh.png"
+        -style "iconOnly"
+        -marginWidth 1
+        -marginHeight 1
+        -command "import os\nimport sys\n\npath = "G:/.shortcut-targets-by-id/1LKqbnGUt5-Lrfl9lElekEI0vY2DOIoog/VSPA/DEV/main"\nvenv = path + "/venv/Lib/site-packages"\n\nos.environ["PFE_ENV"] = "G:/.shortcut-targets-by-id/1LKqbnGUt5-Lrfl9lElekEI0vY2DOIoog/VSPA"\nos.environ["DEV_ENV"] = "G:/.shortcut-targets-by-id/1LKqbnGUt5-Lrfl9lElekEI0vY2DOIoog/VSPA/DEV/main"\nos.environ["PFE_PROJET"] = "G:/.shortcut-targets-by-id/1LKqbnGUt5-Lrfl9lElekEI0vY2DOIoog/VSPA"\n\nsys.path.append(path)\nsys.path.append(venv)\n\nfrom Maya.common_ import update_user_setup\n\nupdate_user_setup()\n"
+        -sourceType "python"
+        -commandRepeatable 1
+        -flat 1
+    ;
+}

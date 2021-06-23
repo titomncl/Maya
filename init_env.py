@@ -53,15 +53,15 @@ def main():
 def pfe_root_path(dev=False):
     import os
 
-    google_path = "G:/.shortcut-targets-by-id/1LKqbnGUt5-Lrfl9lElekEI0vY2DOIoog/"
-    school_path = "X:/INPUT/"
+    google_path = "G:/.shortcut-targets-by-id/1LKqbnGUt5-Lrfl9lElekEI0vY2DOIoog"
+    school_path = "X:/INPUT"
 
     if dev:
-        return "D:/"
+        return "D:"
 
-    if os.path.isdir(google_path + "VSPA/DATA/LIB/CHARA"):
+    if os.path.isdir(google_path + "/VSPA/DATA/LIB/CHARA"):
         return google_path
-    elif os.path.isdir(school_path + "VSPA/DATA/LIB/CHARA"):
+    elif os.path.isdir(school_path + "/VSPA/DATA/LIB/CHARA"):
         return school_path
     else:
         print("No PFE path found.")

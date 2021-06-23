@@ -18,8 +18,6 @@ class Controller(object):
 
         self.ui = ui(self, parent)
 
-        self.first_save_or_not()
-
         self.asset_type = "CHARA"
         self.asset_name = ""
         self.dpt = "MOD"
@@ -33,6 +31,7 @@ class Controller(object):
         self.close_btn = self.ui.close_btn
 
         self.library_box = self.ui.library_combobox
+
         self.get_asset(self.asset_type)
         self.update_asset_name()
 
@@ -43,6 +42,8 @@ class Controller(object):
         self.rig_btn.setChecked(False)
 
         self.init_btn_connections()
+
+        self.first_save_or_not()
 
     def first_save_or_not(self):
         if not self.filepath:
@@ -95,8 +96,7 @@ class Controller(object):
 
             self.library_box.clear()
             self.library_box.addItems(assets)
-        else:
-            raise RuntimeError("No assets found for project -", PROJECT)
+
 
     def mod_action(self):
         self.mod_btn.setChecked(True)

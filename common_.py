@@ -141,7 +141,12 @@ def get_dag_objects(all_=True):
 
 def clean_mode():
     select_list_object()
-    freeze_transforms()
+
+    try:
+        freeze_transforms()
+    except TypeError as e:
+        print("An error occured with the freeze transforms:", e)
+
     delete_history()
 
 

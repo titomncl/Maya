@@ -3,10 +3,10 @@ import os
 from CommonTools.concat import concat
 
 from Maya.globals import PFE_PATH, ROOT_PATH, PROJECT, MAYA_EXT
-from Maya.common_ import get_filepath, save_as, get_main_window
+from Maya.common_ import get_filepath, save_as, open_file, get_main_window
 
 
-class SaveFile(object):
+class SaveLoad(object):
 
     def __init__(self):
         pass
@@ -40,13 +40,9 @@ class SaveFile(object):
     def save(self):
         path, _ = os.path.split(self.filepath)
 
-        files = os.listdir(path)
+        file = self.get_last_file(path)
 
-        maya_files = [f for f in files if MAYA_EXT in files]
-
-        maya_files.sort()
-
-        last_file, _ = os.path.splitext(maya_files[-1])
+        last_file, _ = os.path.splitext(file)
 
         new_filename = self.next_version(last_file)
         new_filepath = concat(path, new_filename + MAYA_EXT, separator="/")
@@ -98,3 +94,35 @@ class SaveFile(object):
         filepath = concat(PFE_PATH, "DATA/LIB", type_, name_, task_, "SCENE/VERSION", filename, separator="/")
 
         save_as(filepath)
+
+    def file_to_load(self, type_, name, task):
+
+        filepath = concat(PFE_PATH, "DATA/LIB", type_, name, task, "SCENE/VERSION", separator="/")
+
+        last_file = self.get_last_file(filepath)
+
+        filepath = concat(filepath, last_file, separator="/")
+
+        return filepath
+
+    @staticmethod
+    def get_last_file(path):
+
+        files = os.listdir(path)
+
+        if files:
+
+            maya_files = [f for f in files if MAYA_EXT in f]
+
+            maya_files.sort()
+
+            last_file = maya_files[-1]
+
+            return last_file
+        else:
+            raise RuntimeError("No files found.")
+
+    def load(self, type_, name_, task_):
+        file = self.file_to_load(type_, name_, task_)
+
+        open_file(file)

@@ -1,6 +1,0 @@
-from CommonTools.save_load.controller import Controller
-from Maya.save_file.save_file import SaveFile
-
-
-def main():
-    instance = Controller(SaveFile(), "Save file")

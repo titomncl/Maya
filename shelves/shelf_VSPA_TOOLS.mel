@@ -34,7 +34,7 @@ global proc shelf_VSPA_TOOLS () {
         -style "iconOnly"
         -marginWidth 1
         -marginHeight 1
-        -command "from Maya.scene_loader import main\nreload(main)\n\nmain.main()\n"
+        -command "from Maya.save_load import load\nreload(load)\n\nload.main()\n"
         -sourceType "python"
         -commandRepeatable 1
         -flat 1
@@ -174,7 +174,7 @@ global proc shelf_VSPA_TOOLS () {
         -style "iconOnly"
         -marginWidth 1
         -marginHeight 1
-        -command "from Maya.save_file import main\nreload(main)\n\nmain.main()\n"
+        -command "from Maya.save_load import save\nreload(save)\n\nsave.main()\n"
         -sourceType "python"
         -commandRepeatable 1
         -flat 1

@@ -1,12 +1,6 @@
-from Maya.save_file.source.ui import UI
-from Maya.save_file.source.controller import Controller
+from CommonTools.save_load.controller import Controller
+from Maya.save_file.save_file import SaveFile
 
 
 def main():
-
-    UI_INSTANCE = Controller(UI)
-    # UI_INSTANCE.show()
-
-
-if __name__ == '__main__':
-    main()
+    instance = Controller(SaveFile(), "Save file")

@@ -1,7 +1,6 @@
 import maya.cmds as mc
 
 import os
-import sys
 
 import subprocess
 
@@ -18,6 +17,7 @@ from CommonTools.concat import concat
 
 def test():
     print("Hello World!")
+
 
 def update_user_setup():
     source_file = os.path.join(DEV_PATH, "Maya/init_env.py").replace("\\", "/")
@@ -40,6 +40,7 @@ def update_user_setup():
 
     if updated:
         update_popup()
+
 
 def update_shelf():
     source_file = os.path.join(DEV_PATH, "Maya/shelves/shelf_VSPA_TOOLS.mel").replace("\\", "/")
@@ -111,6 +112,8 @@ def save_as(filepath):
         filepath (str): path/filename.ma
 
     """
+    clean_mode()
+
     mc.file(rename=filepath)
     mc.file(save=True, type="mayaAscii")
 
@@ -120,17 +123,17 @@ def open_file(filepath):
     mc.file(filepath, open=True, lrd="all", f=True)
 
 
-def get_dag_objects(all=True):
+def get_dag_objects(all_=True):
     """
     Get a list of object
     Args:
-        all (bool): If true, get the visible dag objects. If false, get the current selection
+        all_ (bool): If true, get the visible dag objects. If false, get the current selection
 
     Returns:
         list(str):
 
     """
-    if all:
+    if all_:
         return mc.ls(v=True)
     else:
         return mc.ls(sl=True)
@@ -138,7 +141,12 @@ def get_dag_objects(all=True):
 
 def clean_mode():
     select_list_object()
-    freeze_transforms()
+
+    try:
+        freeze_transforms()
+    except TypeError as e:
+        print("An error occured with the freeze transforms:", e)
+
     delete_history()
 
 

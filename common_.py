@@ -4,7 +4,7 @@ import os
 
 import subprocess
 
-from qtpy.QtWidgets import QMainWindow
+from PySide2.QtWidgets import QMainWindow
 from maya import OpenMayaUI as omui
 from shiboken2 import wrapInstance
 

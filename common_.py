@@ -145,7 +145,7 @@ def clean_mode():
     try:
         freeze_transforms()
     except TypeError as e:
-        print("An error occured with the freeze transforms:", e)
+        print("An error occurred with the freeze transforms:", e)
 
     delete_history()
 

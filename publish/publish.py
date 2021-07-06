@@ -1,0 +1,100 @@
+import os
+
+from shutil import copyfile
+
+from CommonTools.concat import concat
+
+from Maya.globals import PFE_PATH, MAYA_EXT
+from Maya.common_ import get_filepath, save_as, clean_mode
+
+def filepath():
+    try:
+        filepath_ = get_filepath()
+        if PFE_PATH not in filepath_:
+            return None
+        return filepath_
+    except RuntimeError:
+        return None
+
+
+def next_version(file_):
+    """
+    Get the next version from the given file
+    Args:
+        file_:
+
+    Raises:
+        ValueError: if the filename is not correct
+
+    Returns:
+        str: file with last version
+
+    """
+    split_file = file_.rsplit("_", 1)
+    name_file = split_file[0]
+    version = split_file[-1]
+    padding = len(version)
+
+    if version.isdigit():
+        next_version = int(version) + 1
+        next_version = str(next_version).zfill(padding)
+
+        return concat(name_file, next_version, separator="_")
+    else:
+        e = concat(file_, " is incorrect.")
+        raise ValueError(e)
+
+
+def get_last_file(path):
+
+    files = os.listdir(path)
+
+    if files:
+
+        maya_files = [f for f in files if MAYA_EXT in f]
+
+        maya_files.sort()
+
+        last_file = maya_files[-1]
+
+        return last_file
+    else:
+        raise RuntimeError("No files found.")
+
+
+def save(filepath):
+
+    path, _ = os.path.split(filepath)
+
+    file = get_last_file(path)
+
+    last_file, _ = os.path.splitext(file)
+
+    new_filename = next_version(last_file)
+    new_filepath = concat(path, new_filename + MAYA_EXT, separator="/")
+
+    save_as(new_filepath)
+
+    return new_filepath
+
+
+def publish(filepath):
+    path, name = os.path.split(filepath)
+
+    publish_path = path.rsplit("/", 1)[0]
+    publish_path = concat(publish_path, "PUBLISH", separator="/")
+
+    name, ext = os.path.splitext(name)
+    publish_name = name.rsplit("_", 1)[0] + ext
+
+    publish = concat(publish_path, publish_name, separator="/")
+
+    copyfile(filepath, publish)
+
+def save_and_publish():
+    filepath_ = get_filepath()
+
+    if filepath_:
+        clean_mode()
+        filepath_ = save(filepath_)
+        publish(filepath_)

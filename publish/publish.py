@@ -7,6 +7,7 @@ from CommonTools.concat import concat
 from Maya.globals import PFE_PATH, MAYA_EXT
 from Maya.common_ import get_filepath, save_as, clean_mode
 
+
 def filepath():
     try:
         filepath_ = get_filepath()
@@ -36,10 +37,10 @@ def next_version(file_):
     padding = len(version)
 
     if version.isdigit():
-        next_version = int(version) + 1
-        next_version = str(next_version).zfill(padding)
+        next_version_ = int(version) + 1
+        next_version_ = str(next_version_).zfill(padding)
 
-        return concat(name_file, next_version, separator="_")
+        return concat(name_file, next_version_, separator="_")
     else:
         e = concat(file_, " is incorrect.")
         raise ValueError(e)
@@ -62,13 +63,13 @@ def get_last_file(path):
         raise RuntimeError("No files found.")
 
 
-def save(filepath):
+def save(filepath_):
 
-    path, _ = os.path.split(filepath)
+    path, _ = os.path.split(filepath_)
 
-    file = get_last_file(path)
+    file_ = get_last_file(path)
 
-    last_file, _ = os.path.splitext(file)
+    last_file, _ = os.path.splitext(file_)
 
     new_filename = next_version(last_file)
     new_filepath = concat(path, new_filename + MAYA_EXT, separator="/")
@@ -78,8 +79,8 @@ def save(filepath):
     return new_filepath
 
 
-def publish(filepath):
-    path, name = os.path.split(filepath)
+def publish(filepath_):
+    path, name = os.path.split(filepath_)
 
     publish_path = path.rsplit("/", 1)[0]
     publish_path = concat(publish_path, "PUBLISH", separator="/")
@@ -87,9 +88,10 @@ def publish(filepath):
     name, ext = os.path.splitext(name)
     publish_name = name.rsplit("_", 1)[0] + ext
 
-    publish = concat(publish_path, publish_name, separator="/")
+    publish_ = concat(publish_path, publish_name, separator="/")
 
-    copyfile(filepath, publish)
+    copyfile(filepath_, publish_)
+
 
 def save_and_publish():
     filepath_ = get_filepath()

@@ -14,7 +14,6 @@ from CommonTools.concat import concat
 
 def test():
     print("Hello World!")
-    print("Love You!")  # TODO: this thing should be deleted after test
 
 
 def get_main_window():

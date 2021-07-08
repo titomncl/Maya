@@ -8,9 +8,6 @@ from Maya.globals import PROJECT_PATH, MAYA_EXT
 from Maya.common_ import get_filepath, save_as, clean_mode
 
 
-print("test")
-
-
 def filepath():
     try:
         filepath_ = get_filepath()

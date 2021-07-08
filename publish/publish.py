@@ -4,13 +4,13 @@ from shutil import copyfile
 
 from CommonTools.concat import concat
 
-from Maya.globals import PFE_PATH, MAYA_EXT
+from Maya.globals import PROJECT_PATH, MAYA_EXT
 from Maya.common_ import get_filepath, save_as, clean_mode
 
 def filepath():
     try:
         filepath_ = get_filepath()
-        if PFE_PATH not in filepath_:
+        if PROJECT_PATH not in filepath_:
             return None
         return filepath_
     except RuntimeError:

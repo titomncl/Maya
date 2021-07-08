@@ -8,45 +8,11 @@ from PySide2.QtWidgets import QMainWindow
 from maya import OpenMayaUI as omui
 from shiboken2 import wrapInstance
 
-from shutil import copyfile
-
-from Maya.globals import USER_PATH, DEV_PATH
-
-from CommonTools.concat import concat
+from Maya.globals import DEV_PATH
 
 
 def test():
     print("Hello World!")
-
-
-def update_user_setup():
-    source_file = os.path.join(DEV_PATH, "Maya/init_env.py").replace("\\", "/")
-
-    destination_file = concat(USER_PATH, "Documents/maya/2019/scripts/init_env.py", separator="/")
-
-    updated = False
-
-    if not os.path.isfile(destination_file):
-        copyfile(source_file, destination_file)
-        updated = True
-    else:
-        time_src = os.stat(source_file)
-        time_dst = os.stat(destination_file)
-
-        if time_src.st_mtime > time_dst.st_mtime:
-
-            copyfile(source_file, destination_file)
-            updated = True
-
-    if updated:
-        update_popup()
-
-
-def update_shelf():
-    source_file = os.path.join(DEV_PATH, "Maya/shelves/shelf_VSPA_TOOLS.mel").replace("\\", "/")
-    destination_file = concat(USER_PATH, "/Documents/maya/2019/prefs/shelves/shelf_VSPA_TOOLS.mel")
-
-    copyfile(source_file, destination_file)
 
 
 def update_popup():

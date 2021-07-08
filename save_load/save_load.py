@@ -2,7 +2,7 @@ import os
 
 from CommonTools.concat import concat
 
-from Maya.globals import PFE_PATH, ROOT_PATH, PROJECT, MAYA_EXT
+from Maya.globals import PROJECT_PATH, ROOT_PATH, PROJECT, MAYA_EXT
 from Maya.common_ import get_filepath, save_as, open_file
 
 
@@ -20,7 +20,7 @@ class SaveLoad(object):
     def filepath(self):
         try:
             filepath_ = get_filepath()
-            if PFE_PATH not in filepath_:
+            if PROJECT_PATH not in filepath_:
                 return None
             else:
                 return filepath_
@@ -57,7 +57,7 @@ class SaveLoad(object):
 
     def file_to_load(self, type_, name, task):
 
-        filepath = concat(PFE_PATH, "DATA/LIB", type_, name, task, "SCENE/VERSION", separator="/")
+        filepath = concat(PROJECT_PATH, "DATA/LIB", type_, name, task, "SCENE/VERSION", separator="/")
 
         last_file = self.get_last_file(filepath)
 
@@ -106,7 +106,7 @@ class SaveLoad(object):
             save_as(new_filepath)
         else:
             filename = concat(name_, task_, "001" + MAYA_EXT, separator="_")
-            filepath = concat(PFE_PATH, "DATA/LIB", type_, name_, task_, "SCENE/VERSION", filename, separator="/")
+            filepath = concat(PROJECT_PATH, "DATA/LIB", type_, name_, task_, "SCENE/VERSION", filename, separator="/")
 
             save_as(filepath)
 

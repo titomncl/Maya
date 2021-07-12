@@ -1,4 +1,5 @@
-import maya.cmds as mc
+#Check name
+import re
 
 def check(selected)
     _(R|C|L)_([A-Za-z0+9]+) (jnt|jntEnd|geo|ctrl|loc|clstr|crv|nbs|ikhl|grp|parentConstraint|poleVectorConstraint)
@@ -17,4 +18,8 @@ def check(selected)
 
             if not match and not matchGRP in each:
                 list_nomenclatureError.append(each)
+
+            if list_nomenclatureError != []:
+                raise RuntimeError ("/!\ Your nomenclature name is wrong, rename it please/!\ ", list_nomenclatureError)
+
 

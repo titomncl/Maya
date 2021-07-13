@@ -1,25 +1,33 @@
 #Check name
-import re
 
-def check(selected)
-    _(R|C|L)_([A-Za-z0+9]+) (jnt|jntEnd|geo|ctrl|loc|clstr|crv|nbs|ikhl|grp|parentConstraint|poleVectorConstraint)
+import re
+#import maya.cmds as cmds
+
+def check(selected):
     _asset = (r"^([A-Z]+)")
     _loc = (r"([R|C|L])")
     _object = (r"([A-Za-z0-9]+)")
     _type = (r"(jnt|jntEnd|geo|ctrl|loc|clstr|crv|nbs|ikhl|grp|parentConstraint|poleVectorConstraint)$")
 
-    objName = _asset, _loc, _object, _type
-    grpName = (r"^([A-Z]+)_(SKL|CTRL|XTRAS|GEO)_(grp)")
-    list_nomenclatureError = list()
+    obj_name = (r"(?P<_asset>\w+) (?P<_loc>\w+) (?P<_object>\w+) (?<_type\w+)")
+    grp_name = (r"^([A-Z]+)_(SKL|CTRL|XTRAS|GEO)_(grp)")
+    list_nomenclature_error = list()
 
     for each in selected:
-        match = objName.match(each)
-        matchGRP = grpName.match(each)
+        match = obj_name.match(each)
+        match_grp = grp_name.match(each)
 
-            if not match and not matchGRP in each:
-                list_nomenclatureError.append(each)
+        if not match and not match_grp in each:
+                list_nomenclature_error.append(each)
 
-            if list_nomenclatureError != []:
-                raise RuntimeError ("/!\ Your nomenclature name is wrong, rename it please/!\ ", list_nomenclatureError)
+        if list_nomenclature_error != []:
+            raise RuntimeError ("/!\ Your nomenclature name is wrong, rename it please /!\ ", list_nomenclature_error)
 
 
+
+def maya_sel():
+    sel = cmds.ls(sl=True)
+
+    return sel
+
+print()

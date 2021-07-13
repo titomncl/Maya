@@ -1,7 +1,7 @@
 #Check name
 
 import re
-#import maya.cmds as cmds
+import maya.cmds as mc
 
 def check(selected):
     _asset = (r"^([A-Z]+)")
@@ -9,8 +9,8 @@ def check(selected):
     _object = (r"([A-Za-z0-9]+)")
     _type = (r"(jnt|jntEnd|geo|ctrl|loc|clstr|crv|nbs|ikhl|grp|parentConstraint|poleVectorConstraint)$")
 
-    obj_name = (r"(?P<_asset>\w+) (?P<_loc>\w+) (?P<_object>\w+) (?<_type\w+)")
-    grp_name = (r"^([A-Z]+)_(SKL|CTRL|XTRAS|GEO)_(grp)")
+    obj_name = re.compile(r"(?P<_asset>\w+) (?P<_loc>\w+) (?P<_object>\w+) (?P<_type>\w+)")
+    grp_name = re.compile(r"^(?P<asset>[A-Z]+)_(?P<object>SKL|CTRL|XTRAS|GEO)_(?P<type>grp)$")
     list_nomenclature_error = list()
 
     for each in selected:
@@ -23,11 +23,7 @@ def check(selected):
         if list_nomenclature_error != []:
             raise RuntimeError ("/!\ Your nomenclature name is wrong, rename it please /!\ ", list_nomenclature_error)
 
-
-
 def maya_sel():
-    sel = cmds.ls(sl=True)
+    sel = mc.ls(sl=True)
 
     return sel
-
-print()

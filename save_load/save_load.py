@@ -1,5 +1,7 @@
 import os
 
+from collections import OrderedDict
+
 from CommonTools.concat import concat
 
 from Maya.globals import PROJECT_PATH, ROOT_PATH, PROJECT, MAYA_EXT
@@ -26,6 +28,31 @@ class SaveLoad(object):
                 return filepath_
         except RuntimeError:
             return None
+
+    @property
+    def buttons(self):
+        buttons = OrderedDict()
+
+        buttons["MOD"]=  {
+            "CHARA": True,
+            "PROPS": True,
+            "SET": True,
+            "FX": False,
+        }
+        buttons["SHD"] = {
+            "CHARA": True,
+            "PROPS": True,
+            "SET": True,
+            "FX": False,
+        }
+        buttons["RIG"] = {
+            "CHARA": True,
+            "PROPS": False,
+            "SET": False,
+            "FX": False,
+        }
+
+        return buttons
 
     @staticmethod
     def next_version(file_):
@@ -96,9 +123,9 @@ class SaveLoad(object):
         if self.filepath:
             path, _ = os.path.split(self.filepath)
 
-            file = self.get_last_file(path)
+            file_ = self.get_last_file(path)
 
-            last_file, _ = os.path.splitext(file)
+            last_file, _ = os.path.splitext(file_)
 
             new_filename = self.next_version(last_file)
             new_filepath = concat(path, new_filename + MAYA_EXT, separator="/")
@@ -106,11 +133,11 @@ class SaveLoad(object):
             save_as(new_filepath)
         else:
             filename = concat(name_, task_, "001" + MAYA_EXT, separator="_")
-            filepath = concat(PROJECT_PATH, "DATA/LIB", type_, name_, task_, "SCENE/VERSION", filename, separator="/")
+            filepath_ = concat(PROJECT_PATH, "DATA/LIB", type_, name_, task_, "SCENE/VERSION", filename, separator="/")
 
-            save_as(filepath)
+            save_as(filepath_)
 
     def load(self, type_, name_, task_):
-        file = self.file_to_load(type_, name_, task_)
+        file_ = self.file_to_load(type_, name_, task_)
 
-        open_file(file)
+        open_file(file_)

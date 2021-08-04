@@ -6,6 +6,7 @@ from CommonTools.concat import concat
 
 from Maya.globals import PROJECT_PATH, ROOT_PATH, PROJECT, MAYA_EXT
 from Maya.common_ import get_filepath, save_as, open_file
+from Maya.tree.create_tree import ProjectTree
 
 
 class SaveLoad(object):
@@ -130,10 +131,14 @@ class SaveLoad(object):
             new_filename = self.next_version(last_file)
             new_filepath = concat(path, new_filename + MAYA_EXT, separator="/")
 
+            ProjectTree()
+
             save_as(new_filepath)
         else:
             filename = concat(name_, task_, "001" + MAYA_EXT, separator="_")
             filepath_ = concat(PROJECT_PATH, "DATA/LIB", type_, name_, task_, "SCENE/VERSION", filename, separator="/")
+
+            ProjectTree(filepath_)
 
             save_as(filepath_)
 

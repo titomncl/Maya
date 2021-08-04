@@ -9,6 +9,7 @@ from maya import OpenMayaUI as omui
 from shiboken2 import wrapInstance
 
 from Maya.globals import DEV_PATH
+from CommonTools.concat import concat
 
 
 def test():
@@ -89,17 +90,17 @@ def open_file(filepath):
     mc.file(filepath, open=True, lrd="all", f=True)
 
 
-def get_dag_objects(all_=True):
+def get_objects(dag=True):
     """
     Get a list of object
     Args:
-        all_ (bool): If true, get the visible dag objects. If false, get the current selection
+        dag (bool): If true, get the visible dag objects. If false, get the current selection
 
     Returns:
         list(str):
 
     """
-    if all_:
+    if dag:
         return mc.ls(v=True)
     else:
         return mc.ls(sl=True)
@@ -117,7 +118,7 @@ def clean_mode():
 
 
 def select_list_object():
-    mc.select(get_dag_objects())
+    mc.select(get_objects())
 
 
 def delete_history():
@@ -126,3 +127,14 @@ def delete_history():
 
 def freeze_transforms():
     mc.makeIdentity(apply=True, t=True, r=True, s=True, n=False, pn=True)
+
+
+def quick_renaming():
+    from Maya.tree.create_tree import ProjectTree
+
+    sel = get_objects(dag=False)
+
+    asset_name = ProjectTree().asset
+
+    for obj in sel:
+        mc.rename(obj, concat(asset_name, "C", obj, "geo", separator="_"))

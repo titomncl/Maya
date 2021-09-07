@@ -10,3 +10,5 @@ def main():
     else:
         instance = Controller(save_load.save, "Save", get_main_window(),
                               SaveLoad().root, SaveLoad().project, SaveLoad().buttons)
+
+        instance.ui.fx_btn.setEnabled(False)

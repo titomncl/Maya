@@ -85,7 +85,7 @@ class SaveLoad(object):
 
     def file_to_load(self, type_, name, task):
 
-        filepath = concat(PROJECT_PATH, "DATA/LIB", type_, name, task, "SCENE/VERSION", separator="/")
+        filepath = concat(PROJECT_PATH, "DATA/LIB", type_, name, task, "SCENES/VERSION", separator="/")
 
         last_file = self.get_last_file(filepath)
 
@@ -136,7 +136,7 @@ class SaveLoad(object):
             save_as(new_filepath)
         else:
             filename = concat(name_, task_, "001" + MAYA_EXT, separator="_")
-            filepath_ = concat(PROJECT_PATH, "DATA/LIB", type_, name_, task_, "SCENE/VERSION", filename, separator="/")
+            filepath_ = concat(PROJECT_PATH, "DATA/LIB", type_, name_, task_, "SCENES/VERSION", filename, separator="/")
 
             ProjectTree(filepath_)
 

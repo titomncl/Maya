@@ -7,3 +7,5 @@ def main():
 
     instance = Controller(SaveLoad().load, "Load", get_main_window(),
                           SaveLoad().root, SaveLoad().project, SaveLoad().buttons)
+
+    instance.ui.fx_btn.setEnabled(False)

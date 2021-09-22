@@ -5,7 +5,7 @@ from shutil import copyfile
 from CommonTools.concat import concat
 
 from Maya.globals import PROJECT_PATH, MAYA_EXT
-from Maya.common_ import get_filepath, save_as, clean_mode
+from Maya.common_ import get_filepath, save_as, clean_mode, import_ref_to_scene
 
 
 def filepath():
@@ -98,5 +98,6 @@ def save_and_publish():
 
     if filepath_:
         clean_mode()
+        import_ref_to_scene()
         filepath_ = save(filepath_)
         publish(filepath_)

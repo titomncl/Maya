@@ -3,7 +3,6 @@ import os
 from collections import OrderedDict
 
 from CommonTools.concat import concat
-
 from Maya.globals import PROJECT_PATH, ROOT_PATH, PROJECT, MAYA_EXT
 from Maya.common_ import get_filepath, save_as, open_file
 from Maya.tree.create_tree import ProjectTree

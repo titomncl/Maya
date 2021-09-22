@@ -79,8 +79,6 @@ def save_as(filepath):
         filepath (str): path/filename.ma
 
     """
-    clean_mode()
-
     mc.file(rename=filepath)
     mc.file(save=True, type="mayaAscii")
 
@@ -138,3 +136,19 @@ def quick_renaming():
 
     for obj in sel:
         mc.rename(obj, concat(asset_name, "C", obj, "geo", separator="_"))
+
+
+def load_plugin(plugin):
+    mc.loadPlugin(plugin)
+
+
+def import_ref_to_scene():
+    refs = mc.ls(rf=True)
+
+    for ref in refs:
+        ref_file = mc.referenceQuery(ref, f=True)
+        ref_namespace = mc.referenceQuery(ref, ns=True)
+        mc.file(ref_file, ir=True)
+        mc.namespace(mv=[ref_namespace, ":"], f=True)
+
+# def export_file(path, type, )

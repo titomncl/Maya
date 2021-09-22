@@ -16,39 +16,6 @@ def test():
     print("Hello World!")
 
 
-def update_popup():
-
-    title = "Update"
-
-    msg = "An update has been made. Please, restart Maya to apply the modifications."
-
-    restart = "Restart"
-    cancel = "Later"
-
-    btn = [restart, cancel]
-
-    choice_ = mc.confirmDialog(t=title, m=msg, b=btn, db=restart, cb=cancel, ds=cancel)
-
-    if choice_ == restart:
-
-        maya_pyc()
-
-        subprocess.Popen('"C:\\Program Files\\Autodesk\\Maya2019\\bin\\maya.exe"', shell=True)
-        mc.quit(force=True)
-
-
-def maya_pyc():
-
-    maya_path = DEV_PATH + "/Maya/"
-
-    files_ = os.listdir(maya_path)
-
-    pyc_files = [file_ for file_ in files_ if ".pyc" in file_]
-
-    for pyc_file in pyc_files:
-        os.remove(os.path.join(maya_path, pyc_file))
-
-
 def get_main_window():
 
     maya_main_window = omui.MQtUtil.mainWindow()

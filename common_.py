@@ -151,4 +151,9 @@ def import_ref_to_scene():
         mc.file(ref_file, ir=True)
         mc.namespace(mv=[ref_namespace, ":"], f=True)
 
-# def export_file(path, type, )
+def export_obj(filepath):
+    mc.loadPlugin("objExport.mll")
+
+    mc.file(filepath, f=True, op="groups=1;ptgroups=1;materials=1;smoothing=2;normals=1",
+            typ="OBJexport", pr=True, es=True)
+

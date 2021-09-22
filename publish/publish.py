@@ -81,8 +81,6 @@ def publish(filepath_):
     save_as(publish_)
     open_file(filepath_)
 
-    # copyfile(filepath_, publish_)
-
 
 def save_and_publish():
     filepath_ = get_filepath()

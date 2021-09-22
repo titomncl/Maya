@@ -8,7 +8,6 @@ from PySide2.QtWidgets import QMainWindow
 from maya import OpenMayaUI as omui
 from shiboken2 import wrapInstance
 
-from Maya.globals import DEV_PATH
 from CommonTools.concat import concat
 
 
@@ -105,9 +104,6 @@ def quick_renaming():
         mc.rename(obj, concat(asset_name, "C", obj, "geo", separator="_"))
 
 
-def load_plugin(plugin):
-    mc.loadPlugin(plugin)
-
 
 def import_ref_to_scene():
     refs = mc.ls(rf=True)
@@ -118,9 +114,34 @@ def import_ref_to_scene():
         mc.file(ref_file, ir=True)
         mc.namespace(mv=[ref_namespace, ":"], f=True)
 
+
+def get_root_for_abc_export():
+    sel = mc.ls(sl=True)
+
+    root = ""
+
+    for obj in sel:
+        parent_obj = mc.listRelatives(obj, p=True)[-1]
+        main_grp_obj = mc.listRelatives(parent_obj, p=True)
+
+        if main_grp_obj and len(main_grp_obj) == 1:
+            print(main_grp_obj[-1], parent_obj)
+
+            root += "-root |{}|{} ".format(main_grp_obj[-1], parent_obj)
+
+        else:
+            # root += "-root |{}|{}".format(parent_obj, obj)
+            raise RuntimeError("Only meshes are accepted for the moment")
+
+    return root
+
+
 def export_obj(filepath):
     mc.loadPlugin("objExport.mll")
 
     mc.file(filepath, f=True, op="groups=1;ptgroups=1;materials=1;smoothing=2;normals=1",
             typ="OBJexport", pr=True, es=True)
 
+def export_alembic(command):
+    mc.loadPlugin("AbcExport.mll")
+    mc.AbcExport(j=command)

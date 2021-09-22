@@ -1,11 +1,9 @@
 import os
 
-from shutil import copyfile
-
 from CommonTools.concat import concat
 
 from Maya.globals import PROJECT_PATH, MAYA_EXT
-from Maya.common_ import get_filepath, save_as, clean_mode, import_ref_to_scene
+from Maya.common_ import get_filepath, save_as, clean_mode, import_ref_to_scene, open_file
 
 
 def filepath():
@@ -63,20 +61,10 @@ def get_last_file(path):
         raise RuntimeError("No files found.")
 
 
-def save(filepath_):
+def save():
 
-    path, _ = os.path.split(filepath_)
-
-    file_ = get_last_file(path)
-
-    last_file, _ = os.path.splitext(file_)
-
-    new_filename = next_version(last_file)
-    new_filepath = concat(path, new_filename + MAYA_EXT, separator="/")
-
-    save_as(new_filepath)
-
-    return new_filepath
+    from Maya.save_load import save
+    save.main()
 
 
 def publish(filepath_):
@@ -90,7 +78,8 @@ def publish(filepath_):
 
     publish_ = concat(publish_path, publish_name, separator="/")
 
-    copyfile(filepath_, publish_)
+    save_as(publish_)
+    open_file(filepath_)
 
 
 def save_and_publish():
@@ -98,6 +87,6 @@ def save_and_publish():
 
     if filepath_:
         clean_mode()
+        save()
         import_ref_to_scene()
-        filepath_ = save(filepath_)
-        publish(filepath_)
+        publish(get_filepath())

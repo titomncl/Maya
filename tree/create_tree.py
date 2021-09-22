@@ -21,7 +21,7 @@ class ProjectTree(object):
 
     @property
     def filename(self):
-        pattern = re.compile(r"^(?P<asset>[A-Z0-9]+)_(?P<type>[A-Z]+)_(?P<version>\d{3})$")
+        pattern = re.compile(r"^(?P<asset>[A-Z0-9_]+)_(?P<type>[A-Z]+)_(?P<version>\d{3})$")
 
         name_is_correct = pattern.match(os.path.splitext(os.path.split(self.filepath)[-1])[0])
 

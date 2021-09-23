@@ -15,6 +15,12 @@ def test():
     print("Hello World!")
 
 
+def raise_error(e):
+    mc.error(str(e))
+
+def raise_warning(e):
+    mc.warning(str(e))
+
 def get_main_window():
 
     maya_main_window = omui.MQtUtil.mainWindow()
@@ -104,7 +110,6 @@ def quick_renaming():
         mc.rename(obj, concat(asset_name, "C", obj, "geo", separator="_"))
 
 
-
 def import_ref_to_scene():
     refs = mc.ls(rf=True)
 
@@ -141,6 +146,7 @@ def export_obj(filepath):
 
     mc.file(filepath, f=True, op="groups=1;ptgroups=1;materials=1;smoothing=2;normals=1",
             typ="OBJexport", pr=True, es=True)
+
 
 def export_alembic(command):
     mc.loadPlugin("AbcExport.mll")

@@ -1,1 +1,0 @@
-print("Exporter is ok")

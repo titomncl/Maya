@@ -151,3 +151,12 @@ def export_obj(filepath):
 def export_alembic(command):
     mc.loadPlugin("AbcExport.mll")
     mc.AbcExport(j=command)
+
+def smooth_selection(sel):
+    for obj in sel:
+        mc.polySmooth(obj, mth=0, sdt=2, ksb=True, kt=True, kmb=True, suv=True, sl=1, dpe=1, ro=1, ch=True)
+
+
+def undo(sel):
+    for _ in sel:
+        mc.undo()

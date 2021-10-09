@@ -9,7 +9,7 @@ global proc shelf_VSPA_TOOLS () {
         -flexibleWidthType 3
         -flexibleWidthValue 32
         -enable 1
-        -width 35
+        -width 39
         -height 34
         -manage 1
         -visible 1
@@ -29,8 +29,8 @@ global proc shelf_VSPA_TOOLS () {
         -imageOverlayLabel "LOADER" 
         -overlayLabelColor 0.8 0.8 0.8 
         -overlayLabelBackColor 0 0 0 0.5 
-        -image "G:/.shortcut-targets-by-id/1LKqbnGUt5-Lrfl9lElekEI0vY2DOIoog/VSPA/DEV/main/Maya/shelves/icons/loader.png" 
-        -image1 "G:/.shortcut-targets-by-id/1LKqbnGUt5-Lrfl9lElekEI0vY2DOIoog/VSPA/DEV/main/Maya/shelves/icons/loader.png" 
+        -image "X:/VSPA/DEV/main/Maya/shelves/icons/loader.png"
+        -image1 "X:/VSPA/DEV/main/Maya/shelves/icons/loader.png"
         -style "iconOnly" 
         -marginWidth 1
         -marginHeight 1
@@ -169,8 +169,8 @@ global proc shelf_VSPA_TOOLS () {
         -imageOverlayLabel "SAVE" 
         -overlayLabelColor 0.8 0.8 0.8 
         -overlayLabelBackColor 0 0 0 0.5 
-        -image "G:/.shortcut-targets-by-id/1LKqbnGUt5-Lrfl9lElekEI0vY2DOIoog/VSPA/DEV/main/Maya/shelves/icons/save.png" 
-        -image1 "G:/.shortcut-targets-by-id/1LKqbnGUt5-Lrfl9lElekEI0vY2DOIoog/VSPA/DEV/main/Maya/shelves/icons/save.png" 
+        -image "X:/VSPA/DEV/main/Maya/shelves/icons/save.png"
+        -image1 "X:/VSPA/DEV/main/Maya/shelves/icons/save.png"
         -style "iconOnly" 
         -marginWidth 1
         -marginHeight 1
@@ -184,7 +184,7 @@ global proc shelf_VSPA_TOOLS () {
         -flexibleWidthType 3
         -flexibleWidthValue 32
         -enable 1
-        -width 35
+        -width 39
         -height 34
         -manage 1
         -visible 1
@@ -204,8 +204,8 @@ global proc shelf_VSPA_TOOLS () {
         -imageOverlayLabel "PUBLISH" 
         -overlayLabelColor 0.8 0.8 0.8 
         -overlayLabelBackColor 0 0 0 0.5 
-        -image "G:/.shortcut-targets-by-id/1LKqbnGUt5-Lrfl9lElekEI0vY2DOIoog/VSPA/DEV/main/Maya/shelves/icons/publish.png" 
-        -image1 "G:/.shortcut-targets-by-id/1LKqbnGUt5-Lrfl9lElekEI0vY2DOIoog/VSPA/DEV/main/Maya/shelves/icons/publish.png" 
+        -image "X:/VSPA/DEV/main/Maya/shelves/icons/publish.png"
+        -image1 "X:/VSPA/DEV/main/Maya/shelves/icons/publish.png"
         -style "iconOnly" 
         -marginWidth 1
         -marginHeight 1

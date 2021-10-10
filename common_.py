@@ -167,6 +167,8 @@ def smooth_selection(sel):
     for obj in sel:
         mc.polySmooth(obj, mth=0, sdt=2, ksb=True, kt=True, kmb=True, suv=True, sl=1, dpe=1, ro=1, ch=True)
 
+def frame_range():
+    return int(mc.playbackOptions(q=True, min=True)), int(mc.playbackOptions(q=True, max=True))
 
 def undo(sel):
     for _ in sel:

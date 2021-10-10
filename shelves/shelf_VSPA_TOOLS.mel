@@ -236,6 +236,7 @@ global proc shelf_VSPA_TOOLS () {
         -flipY 0
         -useAlpha 1
         -font "plainLabelFont" 
+        -imageOverlayLabel "EXPORT" 
         -overlayLabelColor 0.8 0.8 0.8 
         -overlayLabelBackColor 0 0 0 0.5 
         -image "X:/VSPA/DEV/main/Maya/shelves/icons/export.png" 

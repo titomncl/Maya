@@ -130,8 +130,6 @@ def get_root_for_abc_export():
         main_grp_obj = mc.listRelatives(parent_obj, p=True)
 
         if main_grp_obj and len(main_grp_obj) == 1:
-            print(main_grp_obj[-1], parent_obj)
-
             root += "-root |{}|{} ".format(main_grp_obj[-1], parent_obj)
 
         else:

@@ -141,6 +141,17 @@ def get_root_for_abc_export():
     return root
 
 
+def get_cam_for_abc_export():
+    sel = mc.ls(sl=True)
+
+    root = ""
+
+    for obj in sel:
+        root += "-root |{}".format(obj)
+
+    return root
+
+
 def export_obj(filepath):
     mc.loadPlugin("objExport.mll")
 

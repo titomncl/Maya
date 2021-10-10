@@ -170,6 +170,9 @@ def smooth_selection(sel):
 def frame_range():
     return int(mc.playbackOptions(q=True, min=True)), int(mc.playbackOptions(q=True, max=True))
 
-def undo(sel):
-    for _ in sel:
+def undo(sel=None):
+    if sel:
+        for _ in sel:
+            mc.undo()
+    else:
         mc.undo()

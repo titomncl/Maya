@@ -8,13 +8,18 @@ from PySide2.QtWidgets import QMainWindow
 from maya import OpenMayaUI as omui
 from shiboken2 import wrapInstance
 
-from Maya.globals import DEV_PATH
 from CommonTools.concat import concat
 
 
 def test():
     print("Hello World!")
 
+
+def raise_error(e):
+    mc.error(str(e))
+
+def raise_warning(e):
+    mc.warning(str(e))
 
 def get_main_window():
 
@@ -105,10 +110,6 @@ def quick_renaming():
         mc.rename(obj, concat(asset_name, "C", obj, "geo", separator="_"))
 
 
-def load_plugin(plugin):
-    mc.loadPlugin(plugin)
-
-
 def import_ref_to_scene():
     refs = mc.ls(rf=True)
 
@@ -118,9 +119,59 @@ def import_ref_to_scene():
         mc.file(ref_file, ir=True)
         mc.namespace(mv=[ref_namespace, ":"], f=True)
 
+
+def get_root_for_abc_export():
+    sel = mc.ls(sl=True)
+
+    root = ""
+
+    for obj in sel:
+        parent_obj = mc.listRelatives(obj, p=True)[-1]
+        main_grp_obj = mc.listRelatives(parent_obj, p=True)
+
+        if main_grp_obj and len(main_grp_obj) == 1:
+            print(main_grp_obj[-1], parent_obj)
+
+            root += "-root |{}|{} ".format(main_grp_obj[-1], parent_obj)
+
+        else:
+            raise RuntimeError("Only meshes are accepted for the moment")
+
+    return root
+
+
+def get_cam_for_abc_export():
+    sel = mc.ls(sl=True)
+
+    root = ""
+
+    for obj in sel:
+        root += "-root |{}".format(obj)
+
+    return root
+
+
 def export_obj(filepath):
     mc.loadPlugin("objExport.mll")
 
     mc.file(filepath, f=True, op="groups=1;ptgroups=1;materials=1;smoothing=2;normals=1",
             typ="OBJexport", pr=True, es=True)
 
+
+def export_alembic(command):
+    mc.loadPlugin("AbcExport.mll")
+    mc.AbcExport(j=command)
+
+def smooth_selection(sel):
+    for obj in sel:
+        mc.polySmooth(obj, mth=0, sdt=2, ksb=True, kt=True, kmb=True, suv=True, sl=1, dpe=1, ro=1, ch=True)
+
+def frame_range():
+    return int(mc.playbackOptions(q=True, min=True)), int(mc.playbackOptions(q=True, max=True))
+
+def undo(sel=None):
+    if sel:
+        for _ in sel:
+            mc.undo()
+    else:
+        mc.undo()

@@ -135,7 +135,6 @@ def get_root_for_abc_export():
             root += "-root |{}|{} ".format(main_grp_obj[-1], parent_obj)
 
         else:
-            # root += "-root |{}|{}".format(parent_obj, obj)
             raise RuntimeError("Only meshes are accepted for the moment")
 
     return root

@@ -41,7 +41,7 @@ class Core:
 
         Core.export_abc(filepath, start_frame, end_frame)
 
-        undo()
+        undo(sel)
 
     @staticmethod
     def export_abc(filepath, start_frame=1, end_frame=1):

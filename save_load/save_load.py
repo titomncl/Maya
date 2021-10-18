@@ -1,4 +1,5 @@
 import os
+import re
 import sys
 
 if sys.version_info > (3,):
@@ -13,7 +14,7 @@ from collections import OrderedDict
 from CommonTools.concat import concat
 from CommonTools.os_ import glob_path_recursive
 from Maya.common_ import get_filepath, save_as, open_file
-from Maya.globals import PROJECT_PATH, ROOT_PATH, PROJECT, MAYA_EXT
+from Maya.globals import PROJECT_PATH, ROOT_PATH, PROJECT, MAYA_EXT, FILENAME_PATTERN
 from Maya.tree.create_tree import ProjectTree
 
 
@@ -91,7 +92,9 @@ class SaveLoad(object):
 
         if files:
 
-            maya_files = [f for f in files if MAYA_EXT in f]
+            file_pattern = re.compile("^" + FILENAME_PATTERN + MAYA_EXT + "$")
+
+            maya_files = list(set([f for f in files if file_pattern.match(f)]))
 
             maya_files.sort()
 

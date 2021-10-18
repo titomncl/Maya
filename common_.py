@@ -126,14 +126,13 @@ def get_root_for_abc_export():
     root = ""
 
     for obj in sel:
-        parent_obj = mc.listRelatives(obj, p=True)[-1]
-        main_grp_obj = mc.listRelatives(parent_obj, p=True)
+        parent_obj = mc.listRelatives(obj, p=True)
+        if parent_obj:
+            parent_obj = parent_obj[-1]
+            main_grp_obj = mc.listRelatives(parent_obj, p=True)
 
-        if main_grp_obj and len(main_grp_obj) == 1:
-            root += "-root |{}|{} ".format(main_grp_obj[-1], parent_obj)
-
-        else:
-            raise RuntimeError("Only meshes are accepted for the moment")
+            if main_grp_obj and len(main_grp_obj) == 1 and main_grp_obj[-1] not in root:
+                root += "-root |{}|{} ".format(main_grp_obj[-1], parent_obj)
 
     return root
 

@@ -10,3 +10,4 @@ sl = True
 
 for each in sel:
     mc.rename(each, asset_name + "_" + location_name + "_" + each + "_" + type_name)
+#bonjour

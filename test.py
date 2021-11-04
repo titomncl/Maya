@@ -161,5 +161,25 @@ def colorize_ctrl():
             mc.setAttr(ctrl + '.overrideColor', LEFT_COLOR)
 
 
+def correct_constraint():
+
+    constraint_regex = re.compile(r"^(?P<asset>[A-Z]+)_(?P<side>[CLR])_(?P<object>[A-Za-z0-9]+)_(?P<type>[A-Za-z]+)_(?P<constraint>.+Constraint)([0-9])$")
+
+    sel = mc.ls("*Constraint*")
+
+    for element in sel:
+
+        name_is_correct = constraint_regex.match(element)
+
+        if name_is_correct:
+            name = name_is_correct.groupdict()
+
+            new_object_name = name["object"] + name["type"].capitalize()
+
+            corrected_name = concat(name["asset"], name["side"], new_object_name, name["constraint"], separator="_")
+
+            mc.rename(element, corrected_name)
+
+
 if __name__ == '__main__':
     pass

@@ -86,7 +86,8 @@ def save_and_publish():
     filepath_ = get_filepath()
 
     if filepath_:
-        clean_mode()
+        if not "RIG" in filepath_:
+            clean_mode()
         save()
         import_ref_to_scene()
         publish(get_filepath())

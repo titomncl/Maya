@@ -1,19 +1,22 @@
 # create a locator by selecting deformable part of an object to place a joint after that
-import maya.cmds as cmds
+import maya.cmds as mc
 import re
+
+from CommonTools.concat import concat
+
 
 def get_name():
 
-    selection = cmds.ls(sl=True)
+    selection = mc.ls(sl=True)
 
     for object_name in selection:
         regex = re.compile(
-            r"(?P<reference>.*:)?(?P<asset>[A-Z]+)_(?P<side>C|L|R)_(?P<object>[A-Za-z0-9]+)_(?P<type>[a-zA-Z+]+)(?P<selection>.*)?")
+            r"(?P<reference>.*:)?(?P<asset>[A-Z0-9_]+)_(?P<side>C|L|R)_(?P<object>[A-Za-z0-9]+)_(?P<type>[a-zA-Z+]+)(?P<selection>.*)?")
 
         name = regex.match(object_name)
 
         if name is None:
-            cmds.warning("Object " + object_name + " is not conform with the naming convention.")
+            mc.warning("Object " + object_name + " is not conform with the naming convention.")
         else:
             name = name.groupdict()
 
@@ -21,30 +24,30 @@ def get_name():
 
             locator_name = check_double(name)
 
-            cmds.select(selection)
+            mc.select(selection)
 
             return locator_name
 
 
 def create_locator(name):
 
-    cmds.cluster()
+    mc.cluster()
 
-    sel = cmds.ls(sl=True, long=True)
+    sel = mc.ls(sl=True, long=True)
 
     for clstr in sel:
-        pos = cmds.xform(clstr, q=True, rp=True)
-        cmds.delete(clstr)
-        my_loc = cmds.spaceLocator(p=pos, n=name)
-        cmds.xform(my_loc, cp=1)
+        pos = mc.xform(clstr, q=True, rp=True)
+        mc.delete(clstr)
+        my_loc = mc.spaceLocator(p=pos, n=name)
+        mc.xform(my_loc, cp=1)
 
-    cmds.parent(name, "*locators_grp")
+    mc.parent(name, "*locators_grp")
 
-    cmds.makeIdentity(a=True, t=True, r=True, s=True, n=False, pn=True)
+    mc.makeIdentity(a=True, t=True, r=True, s=True, n=False, pn=True)
 
 
 def create_loc_grp(asset):
-    cmds.select(all=True, hi=True)
+    mc.select(all=True, hi=True)
 
     xtras = False
     locator_bool = False
@@ -52,33 +55,33 @@ def create_loc_grp(asset):
     xtras_n = asset + "_XTRAS_grp"
     locator_grp = asset + "_C_locators_grp"
 
-    for element in cmds.ls(sl=True):
+    for element in mc.ls(sl=True):
         if "XTRAS" in element:
             xtras = True
         if "locators_grp" in element:
             locator_bool = True
 
     if not xtras:
-        cmds.group(p=asset + "_grp", n=xtras_n, em=True)
-        cmds.group(p=xtras_n, n=locator_grp, em=True)
+        mc.group(p=asset + "_grp", n=xtras_n, em=True)
+        mc.group(p=xtras_n, n=locator_grp, em=True)
     elif not locator_bool:
-        cmds.group(p=xtras_n, n=locator_grp, em=True)
+        mc.group(p=xtras_n, n=locator_grp, em=True)
 
-    cmds.select(clear=True)
+    mc.select(clear=True)
 
 
 def check_double(groupdict):
-    cmds.select(all=True, hi=True)
+    mc.select(all=True, hi=True)
 
     name = groupdict["asset"] + "_" + groupdict["side"] + "_" + groupdict["object"]
 
     count = 0
 
-    for element in cmds.ls(sl=True):
+    for element in mc.ls(sl=True):
         if "locator" in element and name in element and not "Shape" in element:
             print(element)
             count+=1
-            cmds.rename(element, name + str(count).zfill(2) + "_locator")
+            mc.rename(element, name + str(count).zfill(2) + "_locator")
 
     if count == 0:
         name = name + "_locator"
@@ -87,7 +90,7 @@ def check_double(groupdict):
     return name
 
 
-def main():
+def locator():
 
     locator = get_name()
 
@@ -95,29 +98,68 @@ def main():
         create_locator(locator)
 
 
-
 # TRANSFORM LOC TO JNT
-import maya.cmds as cmds
-import re
+def loc_to_jnt():
+    sel = mc.ls(sl=True, l=True)
 
-sel = cmds.ls(sl=True, l=True)
+    for loc in sel:
+        pos = mc.xform(loc, q=True, rp=True)
+        name = loc
 
-for loc in sel:
-    pos = cmds.xform(loc, q=True, rp=True)
-    name = loc
+        name = name.split("|")[-1]
 
-    name = name.split("|")[-1]
+        regex = re.compile(r"(?P<asset>[A-Z0-9_]+)_(?P<side>C|L|R)_(?P<object>[A-Za-z0-9]+)_(?P<type>[A-Za-z]+)")
 
-    regex = re.compile(r"(?P<asset>[A-Z]+)_(?P<side>C|L|R)_(?P<object>[A-Za-z0-9]+)_(?P<type>[A-Za-z]+)")
+        name = regex.match(name)
 
-    name = regex.match(name)
+        dict_name = name.groupdict()
 
-    dict_name = name.groupdict()
+        grp_name = dict_name["asset"] + "_RIG_grp"
+        mc.select(grp_name)
 
-    grp_name = dict_name["asset"] + "_RIG_grp"
-    cmds.select(grp_name)
+        joint_name = dict_name["asset"] + "_" + dict_name["side"] + "_" + dict_name["object"] + "_jnt"
 
-    joint_name = dict_name["asset"] + "_" + dict_name["side"] + "_" + dict_name["object"] + "_jnt"
+        mc.joint(p=pos, n=joint_name)
+        mc.joint(joint_name, e=True, zso=True)
 
-    cmds.joint(p=pos, n=joint_name)
-    cmds.joint(joint_name, e=True, zso=True)
+
+def abs_grp():
+    sel = mc.ls(sl=True)
+
+    for obj in sel:
+        ctrl_pattern = re.compile(r"^(?P<asset>[A-Z0-9_]+)_(?P<side>C|L|R)_(?P<object>[A-Za-z0-9]+)_(?P<type>ctrl|grp)")
+
+        obj_is_conform = ctrl_pattern.match(obj)
+
+        if obj_is_conform:
+            obj_name = obj_is_conform.groupdict()
+
+            grp_name = concat(obj_name["asset"], obj_name["side"], obj_name["object"], "Abs_grp", separator="_")
+
+            mc.group(obj, w=True, n=grp_name)
+
+
+def colorize_ctrl():
+    ULTIMATE_COLOR = 14
+    CENTER_COLOR = 17
+    RIGHT_COLOR = 13
+    LEFT_COLOR = 6
+
+    selection = mc.ls('*ctrlShape')
+
+    for ctrl in selection:
+        mc.setAttr(ctrl + '.overrideEnabled', 1)
+        print(ctrl)
+        if '_C_' in ctrl:
+            if "ultimate" in ctrl:
+                mc.setAttr(ctrl + '.overrideColor', ULTIMATE_COLOR)
+            else:
+                mc.setAttr(ctrl + '.overrideColor', CENTER_COLOR)
+        elif '_R_' in ctrl:
+            mc.setAttr(ctrl + '.overrideColor', RIGHT_COLOR)
+        elif '_L_' in ctrl:
+            mc.setAttr(ctrl + '.overrideColor', LEFT_COLOR)
+
+
+if __name__ == '__main__':
+    pass

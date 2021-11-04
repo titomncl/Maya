@@ -123,18 +123,27 @@ def import_ref_to_scene():
 def get_root_for_abc_export():
     sel = mc.ls(sl=True)
 
-    root = ""
+    abc_root = ""
 
     for obj in sel:
-        parent_obj = mc.listRelatives(obj, p=True)
-        if parent_obj:
-            parent_obj = parent_obj[-1]
-            main_grp_obj = mc.listRelatives(parent_obj, p=True)
+        root = "-root {}".format(list_parent(obj))
+        if root not in abc_root:
+            abc_root = "{} {}".format(abc_root, root)
 
-            if main_grp_obj and len(main_grp_obj) == 1 and main_grp_obj[-1] not in root:
-                root += "-root |{}|{} ".format(main_grp_obj[-1], parent_obj)
+    return abc_root.strip()
 
-    return root
+
+def list_parent(obj, root=None):
+    root_ = root or ""
+
+    parent_obj = mc.listRelatives(obj, p=True)
+
+    if parent_obj:
+        for p_obj in parent_obj:
+            root_ = "|{}{}".format(p_obj, root_)
+            root_ = list_parent(p_obj, root_)
+
+    return root_
 
 
 def get_cam_for_abc_export():
@@ -156,7 +165,6 @@ def export_obj(filepath):
 
 
 def export_alembic(command):
-    mc.loadPlugin("AbcExport.mll")
     mc.AbcExport(j=command)
 
 def smooth_selection(sel):

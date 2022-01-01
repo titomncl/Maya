@@ -13,7 +13,7 @@ from collections import OrderedDict
 
 from CommonTools.concat import concat
 from CommonTools.os_ import glob_path_recursive
-from Maya.common_ import get_filepath, save_as, open_file, raise_error
+from Maya.common_ import get_filepath, save_as, open_file
 from Maya.globals import PROJECT_PATH, ROOT_PATH, PROJECT, MAYA_EXT, FILENAME_PATTERN
 from Maya.tree.create_tree import ProjectTree
 
@@ -129,19 +129,22 @@ class SaveLoad(object):
             path = os.path.join(item.paths["PATH"], item.name, dpt).replace("\\", "/")
             path = glob_path_recursive(path, "VERSION")
 
-            filename = concat(item.name, dpt, "001" + MAYA_EXT, separator="_")
-            filepath_ = concat(path, filename, separator="/")
+            file_ = self.get_last_file(path)
+
+            if item.name in file_ and dpt in file_ and MAYA_EXT in file_:
+                last_file, _ = os.path.splitext(file_)
+
+                filename = self.next_version(last_file)
+            else:
+                filename = concat(item.name, dpt, "001" + MAYA_EXT, separator="_")
+
+            filepath_ = concat(path, filename + MAYA_EXT, separator="/")
 
             ProjectTree(filepath_)
 
             save_as(filepath_)
 
     def load(self, item, dpt):
-        if item in [None, ""]:
-            raise_error("No asset or shot selected")
-        if dpt in [None, ""]:
-            raise_error("No department selected")
-
         path = os.path.join(item.paths["PATH"], item.name, dpt).replace("\\", "/")
 
         path = glob_path_recursive(path, "VERSION")

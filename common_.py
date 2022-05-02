@@ -15,6 +15,18 @@ def test():
     print("Hello World!")
 
 
+def kill_instance(parent, window_title):
+    # type: (QMainWindow, str) -> None
+    children = parent.children()
+
+    for child in children:
+        try:
+            if child.windowTitle() == window_title:
+                child.destroy()
+        except AttributeError:
+            pass
+
+
 def raise_error(e):
     mc.error(str(e))
 
